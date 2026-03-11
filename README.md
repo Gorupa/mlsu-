@@ -13,7 +13,7 @@ This repository contains the source code for the MLSU Study Resources website, a
 
 ## 🚀 Live Website
 You can access and download the materials directly from the live website here: 
-**[Insert your new Cloudflare Pages link here once generated]**
+**[https://gorumlsu.pages.dev/]**
 
 ## 🤝 Contributing
 I love open source, and this project thrives on collaboration! If you have better notes, newer past papers, or want to improve the website's code to help our classmates:
