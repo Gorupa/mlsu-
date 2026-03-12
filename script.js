@@ -3,40 +3,21 @@ const filesDatabase = [
     {
         course: "llb",
         year: "1",
-        subject: "all",
-        type: "Complete ZIP",
-        title: "LLB 1st Year: Complete Notes",
-        description: "All 11 papers compressed into a single ZIP file, including Legal Language and General Hindi.",
-        link: "https://drive.google.com/uc?id=1Ddb0hA9kwrRE_WwVQRGzomgVeRmDRZZh&export=download",
-        icon: "folder_zip"
-    },
-    {
-        course: "llb",
-        year: "1",
-        subject: "contract",
-        type: "Past Paper",
-        title: "Contract Law (Paper 1)",
-        description: "2023 Previous Year Examination Paper.",
-        link: "#",
-        icon: "history_edu"
-    },
-    {
-        course: "llb",
-        year: "1",
-        subject: "hindi",
-        type: "Handwritten Notes",
-        title: "General Hindi",
-        description: "Complete handwritten notes for the General Hindi qualifying paper.",
-        link: "#",
-        icon: "edit_note"
+        subject: "language", // Matches the ID in the dropdown data below
+        type: "Study Material Folder",
+        title: "Paper 10: Legal Language & General English",
+        description: "Complete study material folder including notes and resources for Legal Language.",
+        link: "https://drive.google.com/drive/folders/1U4olrQWqI2yiphbtWYF-sYSF6Ty9eAe9",
+        icon: "folder" // Material design icon name
     }
+    // To add the next subject, just copy the block above, paste it here, and change the details!
 ];
 
 // --- 2. DROPDOWN DATA ---
 const curriculumData = {
     "llb": {
         "1": [
-            { id: "all", name: "-- Complete 1st Year Material --" },
+            { id: "all", name: "-- All 1st Year Subjects --" },
             { id: "contract", name: "Paper 1: Contract Law" },
             { id: "torts", name: "Paper 2: Law of Torts" },
             { id: "hindu", name: "Paper 3: Family Law I (Hindu Law)" },
@@ -46,15 +27,15 @@ const curriculumData = {
             { id: "environment", name: "Paper 7: Environmental Law" },
             { id: "crimes", name: "Paper 8: Law of Crimes (IPC)" },
             { id: "interpretation", name: "Paper 9: Interpretation of Statutes" },
-            { id: "language", name: "Paper 10: Legal Language & Writing" },
+            { id: "language", name: "Paper 10: Legal Language & General English" },
             { id: "hindi", name: "Paper 11: General Hindi" }
         ],
-        "2": [{ id: "all", name: "-- Complete 2nd Year Material --" }],
-        "3": [{ id: "all", name: "-- Complete 3rd Year Material --" }]
+        "2": [{ id: "all", name: "-- All 2nd Year Subjects --" }],
+        "3": [{ id: "all", name: "-- All 3rd Year Subjects --" }]
     },
     "ballb": {
-        "1": [{ id: "all", name: "-- Complete Semester 1 Material --" }],
-        "2": [{ id: "all", name: "-- Complete Semester 2 Material --" }]
+        "1": [{ id: "all", name: "-- All Semester 1 Subjects --" }],
+        "2": [{ id: "all", name: "-- All Semester 2 Subjects --" }]
     }
 };
 
@@ -134,7 +115,7 @@ function searchDatabase() {
                 </div>
                 <p class="card-description">${file.description}</p>
                 <a href="${file.link}" class="download-btn ripple" target="_blank" style="background: var(--md-primary); color: white;">
-                    <span class="material-icons-round">download</span> Download
+                    <span class="material-icons-round">folder_open</span> Open Folder
                 </a>
             </div>
         `;
