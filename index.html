@@ -25,6 +25,7 @@
             --md-shape-corner-m: 12px;
             --md-shape-corner-l: 16px;
             --md-shape-corner-xl: 28px;
+            --sidebar-width: 280px;
         }
 
         * {
@@ -38,51 +39,124 @@
             background-color: var(--md-surface-container);
             color: var(--md-on-surface);
             display: flex;
-            flex-direction: column;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Top App Bar */
-        .top-bar {
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
             background: var(--md-surface);
-            color: var(--md-on-surface);
-            padding: 16px 24px;
+            border-right: 1px solid var(--md-outline);
             display: flex;
-            align-items: center;
-            gap: 16px;
-            box-shadow: var(--md-elevation-1);
-            position: sticky;
+            flex-direction: column;
+            position: fixed;
             top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
             z-index: 100;
         }
 
-        .top-bar .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--md-primary);
-            border-radius: 50%;
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--md-outline);
+            position: sticky;
+            top: 0;
+            background: var(--md-surface);
+            z-index: 2;
+        }
+
+        /* Search Bar Styling */
+        .search-box {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--md-on-primary);
-            font-weight: 700;
-            font-size: 1.1rem;
-            flex-shrink: 0;
+            background: var(--md-surface-container-high);
+            border-radius: 24px;
+            padding: 10px 16px;
+            gap: 8px;
+            width: 100%;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
         }
 
-        .top-bar .bar-title {
-            font-size: 1.125rem;
-            font-weight: 500;
-            letter-spacing: 0;
-            line-height: 1.4;
+        .search-box:focus-within {
+            background: var(--md-surface);
+            border-color: var(--md-primary);
+            box-shadow: 0 0 0 1px var(--md-primary);
         }
 
-        .top-bar .bar-subtitle {
-            font-size: 0.8rem;
+        .search-box .material-icons-round {
             color: var(--md-on-surface-variant);
-            font-weight: 400;
+            font-size: 20px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--md-on-surface);
+        }
+
+        .search-box input::placeholder {
+            color: var(--md-on-surface-variant);
+        }
+
+        .sidebar-nav {
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 24px;
+            text-decoration: none;
+            color: var(--md-on-surface-variant);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: var(--md-surface-dim);
+            color: var(--md-on-surface);
+        }
+
+        .nav-item.active {
+            background: var(--md-primary-light);
+            color: var(--md-primary-dark);
+            font-weight: 600;
+        }
+
+        .nav-item .material-icons-round {
+            font-size: 20px;
+        }
+
+        .nav-section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--md-on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 24px 0 8px 16px;
+        }
+
+        /* Main Content Wrapper */
+        .main-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* Hero Section */
@@ -306,29 +380,6 @@
             box-shadow: var(--md-elevation-1);
         }
 
-        /* Info Card */
-        .info-card {
-            background: var(--md-surface);
-            border-radius: var(--md-shape-corner-l);
-            box-shadow: var(--md-elevation-1);
-            padding: 20px 24px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .info-card .material-icons-round {
-            font-size: 24px;
-            color: var(--md-primary);
-            flex-shrink: 0;
-        }
-
-        .info-card p {
-            font-size: 0.8125rem;
-            color: var(--md-on-surface-variant);
-            line-height: 1.5;
-        }
-
         /* Footer */
         footer {
             background: var(--md-surface);
@@ -366,34 +417,28 @@
         }
 
         /* Responsive */
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--md-outline);
+            }
+            .sidebar-nav { flex-direction: row; overflow-x: auto; padding: 12px; gap: 8px; white-space: nowrap; }
+            .nav-section-title { display: none; }
+            .main-wrapper { margin-left: 0; }
+        }
+
         @media (max-width: 600px) {
             .hero {
                 padding: 48px 20px 64px;
             }
-
-            .hero h1 {
-                font-size: 1.75rem;
-            }
-
-            .hero h2 {
-                font-size: 1.05rem;
-            }
-
-            main {
-                padding: 0 16px 32px;
-            }
-
-            .card-content {
-                padding: 20px;
-            }
-
-            .top-bar {
-                padding: 12px 16px;
-            }
-
-            .top-bar .bar-title {
-                font-size: 1rem;
-            }
+            .hero h1 { font-size: 1.75rem; }
+            .hero h2 { font-size: 1.05rem; }
+            main { padding: 0 16px 32px; }
+            .card-content { padding: 20px; }
         }
 
         /* Ripple effect */
@@ -424,137 +469,169 @@
 
         /* Subtle animation */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .animate-in {
-            animation: fadeInUp 0.5s ease forwards;
-        }
-
-        .animate-in:nth-child(2) {
-            animation-delay: 0.1s;
-        }
-
-        .animate-in:nth-child(3) {
-            animation-delay: 0.2s;
-        }
+        .animate-in { animation: fadeInUp 0.5s ease forwards; }
+        .animate-in:nth-child(2) { animation-delay: 0.1s; }
+        .animate-in:nth-child(3) { animation-delay: 0.2s; }
+        .animate-in:nth-child(4) { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
 
-       <div class="top-bar">
-        <div class="logo-icon">M</div>
-        <div>
-            <div class="bar-title">MLSU Study Resources</div>
-            <div class="bar-subtitle">By Gaurav Kalal</div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="search-box">
+                <span class="material-icons-round">search</span>
+                <input type="text" placeholder="Search notes, subjects..." autocomplete="off">
+            </div>
         </div>
-        <nav class="nav-links" style="display: flex; gap: 16px; margin-left: auto; align-items: center;">
-            <a href="index.html" style="text-decoration: none; font-size: 0.9rem; font-weight: 600; color: var(--md-primary);">Home</a>
-            <a href="opensource.html" style="text-decoration: none; font-size: 0.9rem; font-weight: 500; color: var(--md-on-surface-variant);">Open Source</a>
-            <a href="privacy.html" style="text-decoration: none; font-size: 0.9rem; font-weight: 500; color: var(--md-on-surface-variant);">Privacy</a>
+
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item active">
+                <span class="material-icons-round">home</span> Home
+            </a>
+            <a href="opensource.html" class="nav-item">
+                <span class="material-icons-round">code</span> Open Source
+            </a>
+            <a href="privacy.html" class="nav-item">
+                <span class="material-icons-round">security</span> Privacy
+            </a>
+
+            <div class="nav-section-title">Select Class</div>
+            <a href="#" class="nav-item">
+                <span class="material-icons-round">school</span> LLB First Year
+            </a>
+            <a href="#" class="nav-item" style="opacity: 0.5;">
+                <span class="material-icons-round">menu_book</span> LLB Second Year
+            </a>
+            <a href="#" class="nav-item" style="opacity: 0.5;">
+                <span class="material-icons-round">library_books</span> LLB Third Year
+            </a>
+
+            <div class="nav-section-title">Past Papers</div>
+            <a href="#" class="nav-item">
+                <span class="material-icons-round">history</span> Years (2011-2025)
+            </a>
+
+            <div class="nav-section-title">Study Materials</div>
+            <a href="#" class="nav-item">
+                <span class="material-icons-round">edit_note</span> Handwritten Notes
+            </a>
         </nav>
+    </aside>
+
+    <div class="main-wrapper">
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-chip">
+                    <span class="material-icons-round">school</span>
+                    Student Initiative
+                </div>
+                <h1>Mohan Lal Sukhadia University</h1>
+                <h2>LLB Notes & Past Papers</h2>
+                <p>All 11 papers with notes in one ZIP — including Legal Language & General Hindi, generally not available elsewhere.</p>
+            </div>
+        </section>
+
+        <main>
+            <div class="content-wrapper">
+
+                <div class="md-card animate-in">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div class="card-icon-wrapper">
+                                <span class="material-icons-round">folder_zip</span>
+                            </div>
+                            <div class="card-header-text">
+                                <h3>Complete Study Material</h3>
+                                <p>All-in-one archive ready to download</p>
+                            </div>
+                        </div>
+                        <p class="card-description">
+                            Download the complete archive of handwritten notes and previous year MLSU examination papers. Everything is compressed into a single ZIP file for easy access.
+                            <br><strong>All 11 papers</strong> are included in one ZIP with notes — including <strong>Legal Language</strong> and <strong>General Hindi</strong> papers, which are generally not available elsewhere.
+                        </p>
+                        <div class="feature-list">
+                            <span class="feature-chip">
+                                <span class="material-icons-round">edit_note</span>
+                                Handwritten Notes
+                            </span>
+                            <span class="feature-chip">
+                                <span class="material-icons-round">history_edu</span>
+                                All 11 Papers
+                            </span>
+                            <span class="feature-chip">
+                                <span class="material-icons-round">gavel</span>
+                                Legal Language
+                            </span>
+                            <span class="feature-chip">
+                                <span class="material-icons-round">translate</span>
+                                General Hindi
+                            </span>
+                            <span class="feature-chip">
+                                <span class="material-icons-round">archive</span>
+                                Single ZIP
+                            </span>
+                        </div>
+                        <a href="https://drive.google.com/uc?id=1Ddb0hA9kwrRE_WwVQRGzomgVeRmDRZZh&export=download" class="download-btn ripple" target="_blank" rel="noopener noreferrer">
+                            <span class="material-icons-round">download</span>
+                            Download Study Material
+                        </a>
+                    </div>
+                </div>
+
+                <div class="md-card animate-in" style="margin-top: 16px;">
+                    <div class="card-content" style="padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+                            <div class="card-icon-wrapper" style="width: 40px; height: 40px; background: #24292e;">
+                                <span class="material-icons-round" style="color: white; font-size: 20px;">person</span>
+                            </div>
+                            <div>
+                                <h3 style="font-size: 1rem; font-weight: 600; color: var(--md-on-surface);">Gaurav Kalal</h3>
+                                <p style="font-size: 0.8rem; color: var(--md-on-surface-variant);">Creator & Maintainer</p>
+                            </div>
+                        </div>
+                        <p class="card-description" style="margin-bottom: 16px;">
+                            First-year LLB student at MLSU | Open-source enthusiast | Former UNV & NYKS Volunteer. Building digital tools to help students and the community.
+                        </p>
+                        <a href="https://github.com/gorupa" class="download-btn ripple" style="background: #24292e; color: white; padding: 10px 20px; font-size: 0.875rem;" target="_blank" rel="noopener noreferrer">
+                            <span class="material-icons-round" style="font-size: 18px;">code</span>
+                            Follow on GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div class="md-card animate-in" style="margin-top: 16px; background: linear-gradient(to right, #ffffff, #fdfbf7); border-left: 4px solid #ff9933;">
+                    <div class="card-content" style="padding: 20px; text-align: center;">
+                        <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--md-on-surface); margin-bottom: 8px;">Find these notes helpful?</h3>
+                        <p style="font-size: 0.875rem; color: var(--md-on-surface-variant); margin-bottom: 16px; line-height: 1.5;">
+                            This website is completely free and open-source. If this saved you time during exam prep, consider supporting the maintenance of this project!
+                        </p>
+                        <a href="upi://pay?pa=gauravkalal@ybl&pn=Gaurav%20Kalal&cu=INR" class="download-btn ripple" style="background: #ffffff; color: #202124; border: 1px solid #dadce0; padding: 12px 24px; font-size: 0.9375rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                            <span style="font-size: 18px; margin-right: 8px;">☕</span>
+                            Buy me a coffee
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2026 Gaurav Kalal. All rights reserved.</p>
+                <div class="divider"></div>
+                <p class="made-in-india">
+                    Made in <span class="saffron">In</span><span class="white-text">d</span><span class="green">ia</span> with <span style="color:#e53935">&#10084;</span>
+                </p>
+            </div>
+        </footer>
+
     </div>
-
-
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-chip">
-                <span class="material-icons-round">school</span>
-                Student Initiative
-            </div>
-            <h1>Mohan Lal Sukhadia University</h1>
-            <h2>LLB Notes & Past Papers</h2>
-            <p>All 11 papers with notes in one ZIP — including Legal Language & General Hindi, generally not available elsewhere.</p>
-        </div>
-    </section>
-
-    <main>
-        <div class="content-wrapper">
-
-            <div class="md-card animate-in">
-                <div class="card-content">
-                    <div class="card-header">
-                        <div class="card-icon-wrapper">
-                            <span class="material-icons-round">folder_zip</span>
-                        </div>
-                        <div class="card-header-text">
-                            <h3>Complete Study Material</h3>
-                            <p>All-in-one archive ready to download</p>
-                        </div>
-                    </div>
-                    <p class="card-description">
-                        Download the complete archive of handwritten notes and previous year MLSU examination papers. Everything is compressed into a single ZIP file for easy access.
-                        <br><strong>All 11 papers</strong> are included in one ZIP with notes — including <strong>Legal Language</strong> and <strong>General Hindi</strong> papers, which are generally not available elsewhere.
-                    </p>
-                    <div class="feature-list">
-                        <span class="feature-chip">
-                            <span class="material-icons-round">edit_note</span>
-                            Handwritten Notes
-                        </span>
-                        <span class="feature-chip">
-                            <span class="material-icons-round">history_edu</span>
-                            All 11 Papers
-                        </span>
-                        <span class="feature-chip">
-                            <span class="material-icons-round">gavel</span>
-                            Legal Language
-                        </span>
-                        <span class="feature-chip">
-                            <span class="material-icons-round">translate</span>
-                            General Hindi
-                        </span>
-                        <span class="feature-chip">
-                            <span class="material-icons-round">archive</span>
-                            Single ZIP
-                        </span>
-                    </div>
-                    <a href="https://drive.google.com/uc?id=1Ddb0hA9kwrRE_WwVQRGzomgVeRmDRZZh&export=download" class="download-btn ripple" target="_blank" rel="noopener noreferrer">
-                        <span class="material-icons-round">download</span>
-                        Download Study Material
-                    </a>
-                </div>
-            </div>
-
-                        <div class="md-card animate-in" style="margin-top: 16px;">
-                <div class="card-content" style="padding: 20px;">
-                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
-                        <div class="card-icon-wrapper" style="width: 40px; height: 40px; background: #24292e;">
-                            <span class="material-icons-round" style="color: white; font-size: 20px;">person</span>
-                        </div>
-                        <div>
-                            <h3 style="font-size: 1rem; font-weight: 600; color: var(--md-on-surface);">Gaurav Kalal</h3>
-                            <p style="font-size: 0.8rem; color: var(--md-on-surface-variant);">Creator & Maintainer</p>
-                        </div>
-                    </div>
-                    <p class="card-description" style="margin-bottom: 16px;">
-                        First-year LLB student at MLSU | Open-source enthusiast | Former UNV & NYKS Volunteer. Building digital tools to help students and the community.
-                    </p>
-                    <a href="https://github.com/gorupa" class="download-btn ripple" style="background: #24292e; color: white; padding: 10px 20px; font-size: 0.875rem;" target="_blank" rel="noopener noreferrer">
-                        <span class="material-icons-round" style="font-size: 18px;">code</span>
-                        Follow on GitHub
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2026 Gaurav Kalal. All rights reserved.</p>
-            <div class="divider"></div>
-            <p class="made-in-india">
-                Made in <span class="saffron">In</span><span class="white-text">d</span><span class="green">ia</span> with <span style="color:#e53935">&#10084;</span>
-            </p>
-        </div>
-    </footer>
 
 </body>
 </html>
