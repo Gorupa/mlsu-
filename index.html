@@ -37,64 +37,45 @@
         <main>
             <div class="content-wrapper">
                 
-                <div class="filter-container animate-in">
-                    <div class="filter-label">Course</div>
-                    <div class="filter-row">
-                        <button class="filter-btn active" onclick="setFilter('course', 'all', this)">All</button>
-                        <button class="filter-btn" onclick="setFilter('course', 'llb', this)">LLB (3-Year)</button>
-                        <button class="filter-btn" onclick="setFilter('course', 'ballb', this)">BA.LLB (5-Year)</button>
-                    </div>
+                <div class="official-filter-box animate-in">
+                    <h3 style="margin-bottom: 8px; color: var(--md-on-surface); display: flex; align-items: center; gap: 8px;">
+                        <span class="material-icons-round">manage_search</span> Search Database
+                    </h3>
+                    
+                    <label for="courseSelect">1. Select Course</label>
+                    <select id="courseSelect" onchange="updateYears()">
+                        <option value="">--Select Course--</option>
+                        <option value="llb">LLB (3-Year)</option>
+                        <option value="ballb">BA.LLB (5-Year)</option>
+                    </select>
 
-                    <div class="filter-label">Year</div>
-                    <div class="filter-row">
-                        <button class="filter-btn active" onclick="setFilter('year', 'all', this)">All</button>
-                        <button class="filter-btn" onclick="setFilter('year', '1', this)">1st Year</button>
-                        <button class="filter-btn" onclick="setFilter('year', '2', this)">2nd Year</button>
-                        <button class="filter-btn" onclick="setFilter('year', '3', this)">3rd Year</button>
-                    </div>
+                    <label for="yearSelect">2. Select Year / Semester</label>
+                    <select id="yearSelect" onchange="updateSubjects()" disabled>
+                        <option value="">--Select Year/Semester--</option>
+                    </select>
 
-                    <div class="filter-label">Type</div>
-                    <div class="filter-row">
-                        <button class="filter-btn active" onclick="setFilter('type', 'all', this)">All</button>
-                        <button class="filter-btn" onclick="setFilter('type', 'notes', this)">Handwritten Notes</button>
-                        <button class="filter-btn" onclick="setFilter('type', 'papers', this)">Past Papers</button>
+                    <label for="subjectSelect">3. Select Subject Paper</label>
+                    <select id="subjectSelect" disabled>
+                        <option value="">--Select Subject--</option>
+                    </select>
+
+                    <button class="search-action-btn ripple" onclick="searchDatabase()">
+                        <span class="material-icons-round">search</span> Find Materials
+                    </button>
+                </div>
+
+                <div id="results-container">
+                    <div style="text-align:center; padding: 20px; color: var(--md-on-surface-variant);">
+                        Select your parameters above and click search.
                     </div>
                 </div>
 
-                <div class="md-card document-card animate-in" data-course="llb" data-year="1" data-type="notes">
-                    <div class="card-header">
-                        <div class="card-icon-wrapper"><span class="material-icons-round">folder_zip</span></div>
-                        <div class="card-header-text">
-                            <h3>LLB 1st Year: Complete Notes</h3>
-                            <p>Includes Legal Language & General Hindi</p>
-                        </div>
-                    </div>
-                    <p class="card-description">Download the complete archive of handwritten notes. All 11 papers compressed into a single ZIP file for easy access.</p>
-                    <a href="https://drive.google.com/uc?id=1Ddb0hA9kwrRE_WwVQRGzomgVeRmDRZZh&export=download" class="download-btn ripple" target="_blank" rel="noopener">
-                        <span class="material-icons-round">download</span> Download Material
-                    </a>
-                </div>
-
-                <div class="md-card document-card animate-in" data-course="ballb" data-year="1" data-type="papers">
-                    <div class="card-header">
-                        <div class="card-icon-wrapper"><span class="material-icons-round">history_edu</span></div>
-                        <div class="card-header-text">
-                            <h3>BA.LLB 1st Year: Contract Law I</h3>
-                            <p>2023 Previous Year Paper</p>
-                        </div>
-                    </div>
-                    <p class="card-description">Original scanned copy of the 2023 examination paper for BA.LLB Semester 1.</p>
-                    <a href="#" class="download-btn ripple" style="background: var(--md-surface-dim); color: var(--md-on-surface);">
-                        <span class="material-icons-round">lock_clock</span> Coming Soon
-                    </a>
-                </div>
-
-                <div class="md-card animate-in">
+                <div class="md-card animate-in" style="margin-top: 24px;">
                     <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
                         <div class="card-icon-wrapper" style="width: 40px; height: 40px; background: #24292e; color: white;"><span class="material-icons-round" style="font-size: 20px;">person</span></div>
                         <div>
-                            <h3 style="font-size: 1rem; font-weight: 600;">Gaurav Kalal</h3>
-                            <p style="font-size: 0.8rem; color: var(--md-on-surface-variant);">Creator & Maintainer</p>
+                            <h3 style="font-size: 1rem; font-weight: 600; margin: 0;">Gaurav Kalal</h3>
+                            <p style="font-size: 0.8rem; color: var(--md-on-surface-variant); margin: 0;">Creator & Maintainer</p>
                         </div>
                     </div>
                     <a href="https://github.com/gorupa" class="download-btn ripple" style="background: #24292e; color: white; padding: 10px 20px;" target="_blank">
@@ -102,12 +83,12 @@
                     </a>
                 </div>
 
-                <div class="md-card animate-in" style="background: linear-gradient(to right, #ffffff, #fdfbf7); border-left: 4px solid #ff9933;">
+                <div class="md-card animate-in" style="margin-top: 16px; background: linear-gradient(to right, #ffffff, #fdfbf7); border-left: 4px solid #ff9933;">
                     <div style="text-align: center;">
-                        <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 8px;">Find these notes helpful?</h3>
-                        <p style="font-size: 0.875rem; color: var(--md-on-surface-variant); margin-bottom: 16px;">This website is open-source. Consider supporting the project!</p>
+                        <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 8px;">Support the Project</h3>
+                        <p style="font-size: 0.875rem; color: var(--md-on-surface-variant); margin-bottom: 16px;">This website is open-source. Consider supporting the maintenance!</p>
                         <a href="upi://pay?pa=gauravkalal@ybl&pn=Gaurav%20Kalal&cu=INR" class="download-btn ripple" style="background: #ffffff; color: #202124; border: 1px solid #dadce0;">
-                            <span style="font-size: 18px; margin-right: 8px;">☕</span> Buy me a coffee
+                            <span style="font-size: 18px; margin-right: 8px;">☕</span> Buy me a tea
                         </a>
                     </div>
                 </div>
@@ -119,7 +100,7 @@
             <div class="footer-content">
                 <p>&copy; 2026 Gaurav Kalal. All rights reserved.</p>
                 <div class="divider"></div>
-                <p class="made-in-india">Made in <span style="color:#ff9933">In</span>d<span style="color:#138808">ia</span></p>
+                <p class="made-in-india">Made in <span style="color:#ff9933">In</span><span style="color:var(--md-on-surface)">d</span><span style="color:#138808">ia</span></p>
             </div>
         </footer>
     </div>

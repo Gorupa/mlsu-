@@ -38,28 +38,21 @@ body { font-family: 'Inter', 'Google Sans', sans-serif; background-color: var(--
 main { flex: 1; display: flex; justify-content: center; padding: 0 24px 48px; margin-top: -40px; position: relative; z-index: 10; }
 .content-wrapper { max-width: 640px; width: 100%; display: flex; flex-direction: column; gap: 16px; }
 
-/* Filter System UI */
-.filter-container { background: var(--md-surface); border-radius: var(--md-shape-corner-l); box-shadow: var(--md-elevation-2); padding: 20px 24px; margin-bottom: 8px; }
-.filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
-.filter-row:last-child { margin-bottom: 0; }
-.filter-label { font-size: 0.8rem; font-weight: 600; color: var(--md-on-surface-variant); text-transform: uppercase; width: 100%; margin-bottom: 4px; }
-.filter-btn { background: var(--md-surface-dim); border: 1px solid transparent; color: var(--md-on-surface-variant); padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: inherit; }
-.filter-btn:hover { background: var(--md-surface-container-high); color: var(--md-on-surface); }
-.filter-btn.active { background: var(--md-primary-light); color: var(--md-primary-dark); border-color: var(--md-primary); font-weight: 600; }
-
-/* Hide Element Utility */
-.hidden { display: none !important; }
+/* Official Filter Box */
+.official-filter-box { background: var(--md-surface); border-radius: var(--md-shape-corner-l); box-shadow: var(--md-elevation-2); padding: 24px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 16px; border-top: 4px solid var(--md-primary); }
+.official-filter-box label { font-size: 0.85rem; font-weight: 600; color: var(--md-on-surface-variant); margin-bottom: -8px; }
+.official-filter-box select { width: 100%; padding: 12px 16px; border: 1px solid var(--md-outline); border-radius: 8px; font-family: inherit; font-size: 0.95rem; color: var(--md-on-surface); background-color: var(--md-surface-container-high); appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%235f6368" d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 12px top 50%; outline: none; transition: border-color 0.2s; }
+.official-filter-box select:focus { border-color: var(--md-primary); }
+.official-filter-box select:disabled { opacity: 0.5; cursor: not-allowed; }
+.search-action-btn { background: var(--md-primary); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: 600; font-size: 1rem; font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: var(--md-elevation-1); transition: background 0.2s; }
+.search-action-btn:hover { background: var(--md-primary-dark); }
 
 /* Cards */
 .md-card { background: var(--md-surface); border-radius: var(--md-shape-corner-l); box-shadow: var(--md-elevation-2); padding: 24px; transition: box-shadow 0.2s ease; }
 .md-card:hover { box-shadow: var(--md-elevation-3); }
 .card-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
 .card-icon-wrapper { width: 48px; height: 48px; border-radius: var(--md-shape-corner-m); background: var(--md-primary-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--md-primary); font-size: 24px; }
-.card-header-text h3 { font-size: 1.125rem; font-weight: 600; color: var(--md-on-surface); margin-bottom: 4px; }
-.card-header-text p { font-size: 0.875rem; color: var(--md-on-surface-variant); }
 .card-description { font-size: 0.875rem; color: var(--md-on-surface-variant); line-height: 1.6; margin-bottom: 20px; }
-.feature-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-.feature-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--md-surface-dim); border-radius: 8px; padding: 8px 14px; font-size: 0.8125rem; font-weight: 500; color: var(--md-on-surface-variant); }
 
 /* Buttons & Footer */
 .download-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--md-primary); color: var(--md-on-primary); text-decoration: none; padding: 14px 32px; border-radius: var(--md-shape-corner-xl); font-size: 0.9375rem; font-weight: 600; width: 100%; border: none; cursor: pointer; box-shadow: var(--md-elevation-1); transition: all 0.2s; }

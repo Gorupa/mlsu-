@@ -1,44 +1,143 @@
- 
-// State variables to track what is currently selected
-let currentCourse = 'all';
-let currentYear = 'all';
-let currentType = 'all';
+// --- 1. YOUR DATABASE ---
+const filesDatabase = [
+    {
+        course: "llb",
+        year: "1",
+        subject: "all",
+        type: "Complete ZIP",
+        title: "LLB 1st Year: Complete Notes",
+        description: "All 11 papers compressed into a single ZIP file, including Legal Language and General Hindi.",
+        link: "https://drive.google.com/uc?id=1Ddb0hA9kwrRE_WwVQRGzomgVeRmDRZZh&export=download",
+        icon: "folder_zip"
+    },
+    {
+        course: "llb",
+        year: "1",
+        subject: "contract",
+        type: "Past Paper",
+        title: "Contract Law (Paper 1)",
+        description: "2023 Previous Year Examination Paper.",
+        link: "#",
+        icon: "history_edu"
+    },
+    {
+        course: "llb",
+        year: "1",
+        subject: "hindi",
+        type: "Handwritten Notes",
+        title: "General Hindi",
+        description: "Complete handwritten notes for the General Hindi qualifying paper.",
+        link: "#",
+        icon: "edit_note"
+    }
+];
 
-// Function called when a user clicks a filter button
-function setFilter(category, value, buttonElement) {
-    // 1. Update the correct state variable
-    if (category === 'course') currentCourse = value;
-    if (category === 'year') currentYear = value;
-    if (category === 'type') currentType = value;
+// --- 2. DROPDOWN DATA ---
+const curriculumData = {
+    "llb": {
+        "1": [
+            { id: "all", name: "-- Complete 1st Year Material --" },
+            { id: "contract", name: "Paper 1: Contract Law" },
+            { id: "torts", name: "Paper 2: Law of Torts" },
+            { id: "hindu", name: "Paper 3: Family Law I (Hindu Law)" },
+            { id: "muslim", name: "Paper 4: Family Law II (Muslim Law)" },
+            { id: "constitution", name: "Paper 5: Constitutional Law" },
+            { id: "jurisprudence", name: "Paper 6: Jurisprudence" },
+            { id: "environment", name: "Paper 7: Environmental Law" },
+            { id: "crimes", name: "Paper 8: Law of Crimes (IPC)" },
+            { id: "interpretation", name: "Paper 9: Interpretation of Statutes" },
+            { id: "language", name: "Paper 10: Legal Language & Writing" },
+            { id: "hindi", name: "Paper 11: General Hindi" }
+        ],
+        "2": [{ id: "all", name: "-- Complete 2nd Year Material --" }],
+        "3": [{ id: "all", name: "-- Complete 3rd Year Material --" }]
+    },
+    "ballb": {
+        "1": [{ id: "all", name: "-- Complete Semester 1 Material --" }],
+        "2": [{ id: "all", name: "-- Complete Semester 2 Material --" }]
+    }
+};
 
-    // 2. Visually highlight the correct button
-    let siblingButtons = buttonElement.parentElement.querySelectorAll('.filter-btn');
-    siblingButtons.forEach(btn => btn.classList.remove('active'));
-    buttonElement.classList.add('active');
+// --- 3. THE LOGIC ---
+function updateYears() {
+    const course = document.getElementById("courseSelect").value;
+    const yearSelect = document.getElementById("yearSelect");
+    const subjectSelect = document.getElementById("subjectSelect");
 
-    // 3. Run the filtering logic
-    applyFilters();
+    yearSelect.innerHTML = '<option value="">--Select Year/Semester--</option>';
+    subjectSelect.innerHTML = '<option value="">--Select Subject--</option>';
+    subjectSelect.disabled = true;
+
+    if (course) {
+        yearSelect.disabled = false;
+        const yearsCount = course === "llb" ? 3 : 10;
+        const label = course === "llb" ? "Year" : "Semester";
+        
+        for (let i = 1; i <= yearsCount; i++) {
+            yearSelect.innerHTML += `<option value="${i}">${label} ${i}</option>`;
+        }
+    } else {
+        yearSelect.disabled = true;
+    }
 }
 
-// Function to show/hide the cards based on selections
-function applyFilters() {
-    let allCards = document.querySelectorAll('.document-card');
-    
-    allCards.forEach(card => {
-        let cardCourse = card.getAttribute('data-course');
-        let cardYear = card.getAttribute('data-year');
-        let cardType = card.getAttribute('data-type');
-        
-        // Check if the card matches the current filters
-        let matchCourse = (currentCourse === 'all' || currentCourse === cardCourse);
-        let matchYear = (currentYear === 'all' || currentYear === cardYear);
-        let matchType = (currentType === 'all' || currentType === cardType);
+function updateSubjects() {
+    const course = document.getElementById("courseSelect").value;
+    const year = document.getElementById("yearSelect").value;
+    const subjectSelect = document.getElementById("subjectSelect");
 
-        // If it matches all criteria, show it. Otherwise, hide it.
-        if (matchCourse && matchYear && matchType) {
-            card.classList.remove('hidden');
-        } else {
-            card.classList.add('hidden');
-        }
+    subjectSelect.innerHTML = '<option value="">--Select Subject--</option>';
+
+    if (course && year && curriculumData[course] && curriculumData[course][year]) {
+        subjectSelect.disabled = false;
+        curriculumData[course][year].forEach(sub => {
+            subjectSelect.innerHTML += `<option value="${sub.id}">${sub.name}</option>`;
+        });
+    } else {
+        subjectSelect.disabled = true;
+    }
+}
+
+function searchDatabase() {
+    const course = document.getElementById("courseSelect").value;
+    const year = document.getElementById("yearSelect").value;
+    const subject = document.getElementById("subjectSelect").value;
+    const resultsContainer = document.getElementById("results-container");
+
+    resultsContainer.innerHTML = "";
+
+    if (!course || !year || !subject) {
+        resultsContainer.innerHTML = `<div style="text-align:center; padding: 20px; color: #5f6368;">Please select Course, Year, and Subject to view materials.</div>`;
+        return;
+    }
+
+    const results = filesDatabase.filter(file => 
+        file.course === course && 
+        file.year === year && 
+        (file.subject === subject || subject === "all")
+    );
+
+    if (results.length === 0) {
+        resultsContainer.innerHTML = `<div style="text-align:center; padding: 20px; color: #5f6368;">No materials found for this selection yet. Be the first to contribute!</div>`;
+        return;
+    }
+
+    results.forEach(file => {
+        const cardHTML = `
+            <div class="md-card animate-in" style="margin-bottom: 16px;">
+                <div class="card-header">
+                    <div class="card-icon-wrapper"><span class="material-icons-round">${file.icon}</span></div>
+                    <div>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 4px; color: var(--md-on-surface);">${file.title}</h3>
+                        <p style="font-size: 0.875rem; color: #5f6368;">${file.type}</p>
+                    </div>
+                </div>
+                <p class="card-description">${file.description}</p>
+                <a href="${file.link}" class="download-btn ripple" target="_blank" style="background: var(--md-primary); color: white;">
+                    <span class="material-icons-round">download</span> Download
+                </a>
+            </div>
+        `;
+        resultsContainer.innerHTML += cardHTML;
     });
 }
