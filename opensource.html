@@ -1,4 +1,3 @@
- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,53 +6,7 @@
     <title>Open Source | MLSU Study Resources</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <style>
-        /* Exact same CSS as index.html */
-        :root {
-            --md-primary: #1a73e8; --md-primary-dark: #1557b0; --md-primary-light: #e8f0fe;
-            --md-on-primary: #ffffff; --md-surface: #ffffff; --md-surface-dim: #f1f3f4;
-            --md-surface-container: #f8f9fa; --md-surface-container-high: #e8eaed;
-            --md-on-surface: #202124; --md-on-surface-variant: #5f6368; --md-outline: #dadce0;
-            --md-elevation-1: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
-            --md-elevation-2: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15);
-            --md-shape-corner-m: 12px; --md-shape-corner-l: 16px; --md-shape-corner-xl: 28px;
-            --sidebar-width: 280px;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', 'Google Sans', -apple-system, sans-serif; background-color: var(--md-surface-container); color: var(--md-on-surface); display: flex; min-height: 100vh; -webkit-font-smoothing: antialiased; }
-        .sidebar { width: var(--sidebar-width); background: var(--md-surface); border-right: 1px solid var(--md-outline); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 100; }
-        .sidebar-header { padding: 16px; border-bottom: 1px solid var(--md-outline); position: sticky; top: 0; background: var(--md-surface); z-index: 2; }
-        .search-box { display: flex; align-items: center; background: var(--md-surface-container-high); border-radius: 24px; padding: 10px 16px; gap: 8px; width: 100%; border: 1px solid transparent; transition: all 0.2s ease; }
-        .search-box:focus-within { background: var(--md-surface); border-color: var(--md-primary); box-shadow: 0 0 0 1px var(--md-primary); }
-        .search-box .material-icons-round { color: var(--md-on-surface-variant); font-size: 20px; }
-        .search-box input { border: none; background: transparent; outline: none; width: 100%; font-family: inherit; font-size: 0.95rem; color: var(--md-on-surface); }
-        .sidebar-nav { padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; }
-        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 24px; text-decoration: none; color: var(--md-on-surface-variant); font-weight: 500; font-size: 0.9rem; transition: all 0.2s ease; }
-        .nav-item:hover { background: var(--md-surface-dim); color: var(--md-on-surface); }
-        .nav-item.active { background: var(--md-primary-light); color: var(--md-primary-dark); font-weight: 600; }
-        .nav-section-title { font-size: 0.75rem; font-weight: 700; color: var(--md-on-surface-variant); text-transform: uppercase; letter-spacing: 0.05em; margin: 24px 0 8px 16px; }
-        .main-wrapper { flex: 1; margin-left: var(--sidebar-width); display: flex; flex-direction: column; min-height: 100vh; }
-        .hero { background: linear-gradient(135deg, #1a73e8 0%, #4285f4 50%, #669df6 100%); color: white; padding: 64px 24px 80px; text-align: center; position: relative; overflow: hidden; }
-        .hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 8px; }
-        main { flex: 1; display: flex; justify-content: center; padding: 0 24px 48px; margin-top: -40px; position: relative; z-index: 10; }
-        .content-wrapper { max-width: 600px; width: 100%; display: flex; flex-direction: column; gap: 16px; }
-        .md-card { background: var(--md-surface); border-radius: var(--md-shape-corner-l); box-shadow: var(--md-elevation-2); padding: 32px; }
-        .md-card h2 { color: var(--md-primary); font-size: 1.5rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-        .md-card h3 { font-size: 1.1rem; margin: 24px 0 8px; color: var(--md-on-surface); }
-        .md-card p { font-size: 0.95rem; color: var(--md-on-surface-variant); line-height: 1.6; margin-bottom: 16px; }
-        .btn-outline { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--md-primary); border: 1px solid var(--md-outline); padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 8px; transition: background 0.2s; }
-        .btn-outline:hover { background: var(--md-surface-dim); }
-        footer { background: var(--md-surface); border-top: 1px solid var(--md-outline); padding: 24px; text-align: center; }
-        .footer-content { max-width: 560px; margin: 0 auto; }
-        footer p { font-size: 0.8125rem; color: var(--md-on-surface-variant); line-height: 1.8; }
-        .made-in-india { font-weight: 600; font-size: 0.8125rem; }
-        .made-in-india .saffron { color: #ff9933; } .made-in-india .white-text { color: var(--md-on-surface); } .made-in-india .green { color: #138808; }
-        .divider { width: 40px; height: 2px; background: var(--md-outline); margin: 12px auto; border-radius: 1px; }
-        @media (max-width: 900px) { body { flex-direction: column; } .sidebar { position: relative; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--md-outline); } .sidebar-nav { flex-direction: row; overflow-x: auto; padding: 12px; gap: 8px; white-space: nowrap; } .nav-section-title { display: none; } .main-wrapper { margin-left: 0; } }
-        @media (max-width: 600px) { .hero { padding: 48px 20px 64px; } .hero h1 { font-size: 1.75rem; } main { padding: 0 16px 32px; } .md-card { padding: 24px; } }
-        .animate-in { animation: fadeInUp 0.5s ease forwards; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
 
