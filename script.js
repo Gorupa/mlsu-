@@ -1,16 +1,56 @@
-// --- 1. YOUR DATABASE ---
+// --- 1. YOUR MASTER DATABASE ---
+// All your Google Drive folder links are connected here!
 const filesDatabase = [
     {
-        course: "llb",
-        year: "1",
-        subject: "language", // Matches the ID in the dropdown data below
-        type: "Study Material Folder",
-        title: "Paper 10: Legal Language & General English",
-        description: "Complete study material folder including notes and resources for Legal Language.",
-        link: "https://drive.google.com/drive/folders/1U4olrQWqI2yiphbtWYF-sYSF6Ty9eAe9",
-        icon: "folder" // Material design icon name
+        course: "llb", year: "1", subject: "contract", type: "Study Material Folder", 
+        title: "Paper 1: Contract Law", description: "Access all notes, past papers, and resources for Contract Law.", 
+        link: "https://drive.google.com/drive/folders/1zy6GZA6Y3oHaxQVmYGFrrFYvU53ulQiJ", icon: "folder"
+    },
+    {
+        course: "llb", year: "1", subject: "torts", type: "Study Material Folder", 
+        title: "Paper 2: Law of Torts", description: "Access all notes, past papers, and resources for Law of Torts.", 
+        link: "https://drive.google.com/drive/folders/1hmqvsScePYycdeoVvCAMwahfPO7ou3R5", icon: "folder"
+    },
+    {
+        course: "llb", year: "1", subject: "hindu", type: "Study Material Folder", 
+        title: "Paper 3: Family Law I (Hindu Law)", description: "Access all notes, past papers, and resources for Hindu Law.", 
+        link: "https://drive.google.com/drive/folders/1X41NLws_G1XeVH11E5xCCdF3yulREhBT", icon: "folder"
+    },
+    {
+        course: "llb", year: "1", subject: "muslim", type: "Study Material Folder", 
+        title: "Paper 4: Family Law II (Muslim Law)", description: "Access all notes, past papers, and resources for Muslim Law.", 
+        link: "https://drive.google.com/drive/folders/1aA-1VidtMF-64DD2gebxf6klAe55m2Xj", icon: "folder"
+    },
+    {
+        course: "llb", year: "1", subject: "constitution", type: "Study Material Folder", 
+        title: "Paper 5: Constitutional Law", description: "Access all notes, past papers, and resources for Constitutional Law.", 
+        link: "https://drive.google.com/drive/folders/1Fca1DNK8Yq2TkG7mOh3cP4tyRjsS0WCg", icon: "folder"
+    },
+    {
+        course: "llb", year: "1", subject: "environment", type: "Study Material Folder", 
+        title: "Paper 7: Environmental Law", description: "Access all notes, past papers, and resources for Environmental Law.", 
+        link: "https://drive.google.com/drive/folders/1hbtI0xzGDo51ecqyR5AyAN-2K6YJKSCm", icon: "folder"
+    },
+    {
+        course: "llb", year: "1", subject: "interpretation", type: "Study Material Folder", 
+        title: "Paper 9: Interpretation of Statutes", description: "Access all notes, past papers, and resources for Interpretation of Statutes.", 
+        link: "https://drive.google.com/drive/folders/1Mptc98c3YLu1eC6TN0zb8vUKDXe61bFF", icon: "folder"
+    },
+    {
+        course: "llb", year: "1", subject: "language", type: "Study Material Folder", 
+        title: "Paper 10: Legal Language & General English", description: "Access all notes, past papers, and resources for Legal Language.", 
+        link: "https://drive.google.com/drive/folders/1U4olrQWqI2yiphbtWYF-sYSF6Ty9eAe9", icon: "folder"
+    },
+    {
+        course: "llb", year: "1", subject: "hindi", type: "Study Material Folder", 
+        title: "Paper 11: General Hindi", description: "Access all notes, past papers, and resources for General Hindi.", 
+        link: "https://drive.google.com/drive/folders/11B9Kx7GyNxqgiL4PEwCVQ8XiLtv5xbp1", icon: "folder"
+    },
+    {
+        course: "llb", year: "1", subject: "ethics", type: "Study Material Folder", 
+        title: "Professional Ethics", description: "Access all notes, past papers, and resources for Professional Ethics.", 
+        link: "https://drive.google.com/drive/folders/1kW0bMLmojiwksLp_NweCx6UpbDjWU2jT", icon: "folder"
     }
-    // To add the next subject, just copy the block above, paste it here, and change the details!
 ];
 
 // --- 2. DROPDOWN DATA ---
@@ -28,7 +68,8 @@ const curriculumData = {
             { id: "crimes", name: "Paper 8: Law of Crimes (IPC)" },
             { id: "interpretation", name: "Paper 9: Interpretation of Statutes" },
             { id: "language", name: "Paper 10: Legal Language & General English" },
-            { id: "hindi", name: "Paper 11: General Hindi" }
+            { id: "hindi", name: "Paper 11: General Hindi" },
+            { id: "ethics", name: "Professional Ethics" }
         ],
         "2": [{ id: "all", name: "-- All 2nd Year Subjects --" }],
         "3": [{ id: "all", name: "-- All 3rd Year Subjects --" }]
