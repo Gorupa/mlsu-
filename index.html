@@ -3,111 +3,1095 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohan Lal Sukhadia University (MLSU) Study Resources</title>
+    <title>Spine Exchange - Law Book Marketplace & MLSU Resources</title>
+    <meta name="description" content="Student-to-student used law textbook marketplace for MLSU Udaipur. Buy, sell, and access legal study resources.">
+    <meta name="theme-color" content="#1a237e">
+    <link rel="manifest" href="manifest.json">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ─── DESIGN TOKENS ─────────────────────────────────────── */
+        :root {
+            --brand-primary:     #1a237e;   /* deep indigo — ink of law */
+            --brand-primary-lt:  #3949ab;
+            --brand-accent:      #f59e0b;   /* warm amber — book spine gold */
+            --brand-accent-lt:   #fef3c7;
+            --brand-surface:     #ffffff;
+            --brand-bg:          #f5f5f7;
+            --brand-border:      #e8eaed;
+            --brand-text:        #1c1b1f;
+            --brand-text-soft:   #5f6368;
+            --brand-text-xsoft:  #9aa0a6;
+            --brand-success:     #1e8e3e;
+            --brand-danger:      #d93025;
+
+            --radius-sm:   8px;
+            --radius-md:   14px;
+            --radius-lg:   20px;
+            --radius-xl:   28px;
+
+            --shadow-card: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+            --shadow-hover: 0 4px 12px rgba(26,35,126,.14), 0 8px 32px rgba(26,35,126,.08);
+
+            --transition: 220ms cubic-bezier(.4,0,.2,1);
+        }
+
+        /* ─── RESET & BASE ──────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', 'Google Sans', sans-serif;
+            background: var(--brand-bg);
+            color: var(--brand-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        a { text-decoration: none; color: inherit; }
+        button, select, input { font-family: inherit; }
+
+        /* ─── SIDEBAR ───────────────────────────────────────────── */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--brand-surface);
+            border-right: 1px solid var(--brand-border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 100;
+            transition: transform var(--transition);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 20px 16px 12px;
+            border-bottom: 1px solid var(--brand-border);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+
+        .brand-logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--brand-primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Book-spine motif inside logo */
+        .brand-logo-icon::before,
+        .brand-logo-icon::after {
+            content: '';
+            position: absolute;
+            top: 6px; bottom: 6px;
+            width: 3px;
+            border-radius: 2px;
+            background: var(--brand-accent);
+        }
+        .brand-logo-icon::before { left: 9px; }
+        .brand-logo-icon::after  { left: 15px; background: rgba(255,255,255,.6); }
+        .brand-logo-spine {
+            position: absolute;
+            left: 21px; top: 6px; bottom: 6px;
+            width: 3px;
+            border-radius: 2px;
+            background: rgba(255,255,255,.3);
+        }
+
+        .brand-name {
+            font-size: .95rem;
+            font-weight: 700;
+            color: var(--brand-primary);
+            letter-spacing: -.3px;
+        }
+        .brand-tagline {
+            font-size: .67rem;
+            color: var(--brand-text-soft);
+            letter-spacing: .2px;
+        }
+
+        /* ─── SIDEBAR SEARCH ────────────────────────────────────── */
+        .sidebar-search {
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--brand-bg);
+            border-radius: var(--radius-sm);
+            margin: 12px 16px 0;
+            border: 1px solid var(--brand-border);
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .sidebar-search:focus-within {
+            border-color: var(--brand-primary-lt);
+            box-shadow: 0 0 0 3px rgba(57,73,171,.1);
+        }
+        .sidebar-search .material-icons-round { font-size: 18px; color: var(--brand-text-xsoft); }
+        .sidebar-search input {
+            border: none; outline: none;
+            background: transparent;
+            font-size: .85rem;
+            color: var(--brand-text);
+            width: 100%;
+        }
+        .sidebar-search input::placeholder { color: var(--brand-text-xsoft); }
+
+        /* ─── NAV ───────────────────────────────────────────────── */
+        .sidebar-nav {
+            padding: 8px 8px 24px;
+            flex: 1;
+        }
+
+        .nav-section-title {
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            color: var(--brand-text-xsoft);
+            padding: 16px 8px 6px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: var(--radius-sm);
+            font-size: .87rem;
+            font-weight: 500;
+            color: var(--brand-text-soft);
+            transition: background var(--transition), color var(--transition);
+            cursor: pointer;
+        }
+        .nav-item .material-icons-round { font-size: 20px; flex-shrink: 0; }
+        .nav-item:hover { background: var(--brand-bg); color: var(--brand-text); }
+        .nav-item.active {
+            background: #e8eaf6;
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+        .nav-item.active .material-icons-round { color: var(--brand-primary); }
+        .nav-item.cta-item {
+            color: var(--brand-primary);
+            background: #e8eaf6;
+            margin-top: 4px;
+        }
+        .nav-item.cta-item:hover { background: #c5cae9; }
+
+        /* ─── AUTH PILL ─────────────────────────────────────────── */
+        .sidebar-auth {
+            padding: 12px 16px 16px;
+            border-top: 1px solid var(--brand-border);
+        }
+        .auth-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 9px 14px;
+            background: var(--brand-bg);
+            border: 1px solid var(--brand-border);
+            border-radius: var(--radius-xl);
+            font-size: .84rem;
+            font-weight: 500;
+            color: var(--brand-text);
+            cursor: pointer;
+            transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+        }
+        .auth-btn .material-icons-round { font-size: 18px; color: var(--brand-text-soft); }
+        .auth-btn:hover {
+            background: #e8eaf6;
+            border-color: var(--brand-primary-lt);
+            box-shadow: 0 2px 8px rgba(26,35,126,.1);
+        }
+        .auth-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--brand-text-xsoft);
+            margin-left: auto;
+        }
+
+        /* ─── MAIN WRAPPER ──────────────────────────────────────── */
+        .main-wrapper {
+            margin-left: 260px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ─── HERO ──────────────────────────────────────────────── */
+        .hero {
+            background: var(--brand-primary);
+            padding: 40px 24px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Geometric accent — stacked book-spine lines */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 340px; height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 14px,
+                rgba(255,255,255,.04) 14px,
+                rgba(255,255,255,.04) 18px
+            );
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -40px; right: -40px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245,158,11,.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content { position: relative; z-index: 1; max-width: 600px; }
+
+        .hero-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: var(--radius-xl);
+            font-size: .75rem;
+            font-weight: 500;
+            color: rgba(255,255,255,.9);
+            backdrop-filter: blur(4px);
+        }
+        .hero-chip .material-icons-round { font-size: 14px; }
+        .hero-chip.accent { background: rgba(245,158,11,.2); border-color: rgba(245,158,11,.4); color: #fde68a; }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -.5px;
+            line-height: 1.15;
+            margin-bottom: 6px;
+        }
+        .hero h1 span { color: var(--brand-accent); }
+        .hero h2 {
+            font-size: clamp(.95rem, 2vw, 1.15rem);
+            font-weight: 400;
+            color: rgba(255,255,255,.7);
+            margin-bottom: 14px;
+        }
+        .hero p {
+            font-size: .9rem;
+            color: rgba(255,255,255,.65);
+            max-width: 480px;
+            line-height: 1.65;
+            margin-bottom: 24px;
+        }
+
+        .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 20px;
+            border-radius: var(--radius-xl);
+            font-size: .87rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .hero-btn:active { transform: scale(.97); }
+        .hero-btn.primary {
+            background: var(--brand-accent);
+            color: #1a1200;
+        }
+        .hero-btn.primary:hover { box-shadow: 0 4px 20px rgba(245,158,11,.45); }
+        .hero-btn.secondary {
+            background: rgba(255,255,255,.1);
+            color: rgba(255,255,255,.9);
+            border: 1px solid rgba(255,255,255,.2);
+        }
+        .hero-btn.secondary:hover { background: rgba(255,255,255,.18); }
+        .hero-btn .material-icons-round { font-size: 18px; }
+
+        /* ─── MAIN CONTENT ──────────────────────────────────────── */
+        main { flex: 1; }
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 28px 20px 48px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* ─── SECTION HEADERS ───────────────────────────────────── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+        .section-header .material-icons-round {
+            font-size: 22px;
+            color: var(--brand-primary);
+        }
+        .section-header h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--brand-text);
+        }
+        .section-subhead {
+            font-size: .82rem;
+            color: var(--brand-text-soft);
+            margin-bottom: 16px;
+            padding-left: 32px;
+        }
+
+        /* ─── CARDS ─────────────────────────────────────────────── */
+        .md-card {
+            background: var(--brand-surface);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--brand-border);
+            transition: box-shadow var(--transition);
+        }
+        .md-card:hover { box-shadow: var(--shadow-hover); }
+
+        .animate-in {
+            animation: slideUp .4s cubic-bezier(.4,0,.2,1) both;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in:nth-child(2) { animation-delay: .07s; }
+        .animate-in:nth-child(3) { animation-delay: .14s; }
+        .animate-in:nth-child(4) { animation-delay: .21s; }
+        .animate-in:nth-child(5) { animation-delay: .28s; }
+
+        /* ─── MARKETPLACE FILTER BAR ─────────────────────────────── */
+        .market-filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 14px 0;
+            align-items: flex-end;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            min-width: 120px;
+        }
+        .filter-group label {
+            font-size: .72rem;
+            font-weight: 600;
+            color: var(--brand-text-soft);
+            letter-spacing: .3px;
+            text-transform: uppercase;
+        }
+        .filter-group select,
+        .filter-group input {
+            padding: 9px 12px;
+            border: 1px solid var(--brand-border);
+            border-radius: var(--radius-sm);
+            font-size: .85rem;
+            color: var(--brand-text);
+            background: var(--brand-bg);
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+            -webkit-appearance: none;
+        }
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: var(--brand-primary-lt);
+            box-shadow: 0 0 0 3px rgba(57,73,171,.1);
+            background: var(--brand-surface);
+        }
+
+        .search-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 20px;
+            background: var(--brand-primary);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: .87rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+            white-space: nowrap;
+            height: fit-content;
+        }
+        .search-action-btn:hover { background: var(--brand-primary-lt); box-shadow: 0 4px 16px rgba(26,35,126,.25); }
+        .search-action-btn:active { transform: scale(.97); }
+        .search-action-btn .material-icons-round { font-size: 18px; }
+
+        /* ─── BOOK GRID PLACEHOLDER ──────────────────────────────── */
+        .book-grid-placeholder {
+            text-align: center;
+            padding: 36px 20px;
+            border: 2px dashed var(--brand-border);
+            border-radius: var(--radius-md);
+            margin-top: 4px;
+            background: var(--brand-bg);
+        }
+        .book-grid-placeholder .material-icons-round {
+            font-size: 40px;
+            color: var(--brand-text-xsoft);
+            display: block;
+            margin-bottom: 10px;
+        }
+        .book-grid-placeholder p {
+            font-size: .87rem;
+            color: var(--brand-text-soft);
+            line-height: 1.6;
+        }
+        .book-grid-placeholder strong { color: var(--brand-primary); font-weight: 600; }
+
+        /* ─── RESOURCE FILTER BOX ────────────────────────────────── */
+        .official-filter-box {
+            background: var(--brand-surface);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--brand-border);
+            transition: box-shadow var(--transition);
+        }
+        .official-filter-box:hover { box-shadow: var(--shadow-hover); }
+
+        .official-filter-box label {
+            display: block;
+            font-size: .75rem;
+            font-weight: 600;
+            color: var(--brand-text-soft);
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            margin: 12px 0 5px;
+        }
+        .official-filter-box select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--brand-border);
+            border-radius: var(--radius-sm);
+            font-size: .88rem;
+            color: var(--brand-text);
+            background: var(--brand-bg);
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa0a6' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+        .official-filter-box select:focus {
+            border-color: var(--brand-primary-lt);
+            box-shadow: 0 0 0 3px rgba(57,73,171,.1);
+            background-color: var(--brand-surface);
+        }
+        .official-filter-box select:disabled { opacity: .5; cursor: not-allowed; }
+
+        /* ─── RESULTS CONTAINER ──────────────────────────────────── */
+        #results-container {
+            margin-top: 0;
+        }
+        #results-container > div {
+            text-align: center;
+            padding: 20px;
+            font-size: .85rem;
+            color: var(--brand-text-soft);
+        }
+
+        /* ─── BIO CARD ───────────────────────────────────────────── */
+        .bio-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .bio-avatar {
+            width: 44px;
+            height: 44px;
+            background: #24292e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .bio-avatar .material-icons-round { font-size: 22px; color: #fff; }
+        .bio-info { flex: 1; min-width: 0; }
+        .bio-info h3 { font-size: .95rem; font-weight: 700; margin-bottom: 1px; }
+        .bio-info p { font-size: .78rem; color: var(--brand-text-soft); }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border-radius: var(--radius-sm);
+            font-size: .84rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: opacity var(--transition), transform var(--transition);
+            margin-top: 14px;
+        }
+        .download-btn:hover { opacity: .88; }
+        .download-btn:active { transform: scale(.97); }
+        .download-btn .material-icons-round { font-size: 17px; }
+
+        /* ─── TEA CARD ───────────────────────────────────────────── */
+        .tea-card {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 60%, #1a237e 100%);
+            border: none;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .tea-card::before {
+            content: '';
+            position: absolute;
+            top: -30px; right: -30px;
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            background: rgba(245,158,11,.15);
+            pointer-events: none;
+        }
+        .tea-card::after {
+            content: '';
+            position: absolute;
+            bottom: -20px; left: -20px;
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: rgba(245,158,11,.1);
+            pointer-events: none;
+        }
+        .tea-card > * { position: relative; z-index: 1; }
+        .tea-card h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+        .tea-card p { font-size: .87rem; color: rgba(255,255,255,.75); line-height: 1.65; margin-bottom: 20px; }
+        .lucrative-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 24px;
+            background: var(--brand-accent);
+            color: #1a1200;
+            border-radius: var(--radius-xl);
+            font-size: .9rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: box-shadow var(--transition), transform var(--transition);
+        }
+        .lucrative-btn:hover { box-shadow: 0 6px 24px rgba(245,158,11,.5); transform: translateY(-1px); }
+        .lucrative-btn:active { transform: scale(.97); }
+
+        /* ─── OPEN SOURCE BANNER ─────────────────────────────────── */
+        .oss-banner {
+            background: #e8eaf6;
+            border: 1px solid #c5cae9;
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .oss-banner .material-icons-round { color: var(--brand-primary); font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+        .oss-banner p { font-size: .84rem; color: #283593; line-height: 1.6; }
+        .oss-banner strong { font-weight: 600; }
+
+        /* ─── FOOTER ─────────────────────────────────────────────── */
+        footer {
+            background: var(--brand-surface);
+            border-top: 1px solid var(--brand-border);
+            padding: 20px 24px;
+            text-align: center;
+        }
+        footer p {
+            font-size: .78rem;
+            color: var(--brand-text-xsoft);
+            line-height: 1.7;
+        }
+        footer a { color: var(--brand-primary-lt); font-weight: 500; }
+        footer .footer-brand {
+            font-size: .85rem;
+            font-weight: 700;
+            color: var(--brand-primary);
+            margin-bottom: 4px;
+        }
+
+        /* ─── RIPPLE ─────────────────────────────────────────────── */
+        .ripple { position: relative; overflow: hidden; }
+        .ripple::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,.25) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity .4s;
+        }
+        .ripple:active::after { opacity: 1; transition: none; }
+
+        /* ─── MOBILE ─────────────────────────────────────────────── */
+        .mobile-header {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--brand-surface);
+            border-bottom: 1px solid var(--brand-border);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+        .mobile-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .9rem;
+            font-weight: 700;
+            color: var(--brand-primary);
+        }
+        .mobile-brand .brand-logo-icon { width: 28px; height: 28px; }
+        .mobile-menu-btn, .mobile-auth-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-text);
+            transition: background var(--transition);
+        }
+        .mobile-menu-btn:hover, .mobile-auth-btn:hover { background: var(--brand-bg); }
+        .mobile-menu-btn .material-icons-round,
+        .mobile-auth-btn .material-icons-round { font-size: 22px; }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.35);
+            z-index: 99;
+            backdrop-filter: blur(2px);
+        }
+        .sidebar-overlay.active { display: block; }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                box-shadow: 4px 0 24px rgba(0,0,0,.12);
+            }
+            .sidebar.open { transform: translateX(0); }
+            .main-wrapper { margin-left: 0; }
+            .mobile-header { display: flex; }
+            .hero { padding: 24px 16px 36px; }
+            .content-wrapper { padding: 16px 12px 36px; }
+            .market-filter-bar { flex-direction: column; }
+            .filter-group { min-width: 100%; }
+            .bio-card { flex-direction: column; align-items: flex-start; gap: 12px; }
+        }
+    </style>
 </head>
 <body>
 
-    <aside class="sidebar">
+    <!-- ░░ MOBILE HEADER ░░ -->
+    <header class="mobile-header">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Open menu">
+            <span class="material-icons-round">menu</span>
+        </button>
+        <div class="mobile-brand">
+            <div class="brand-logo-icon"><div class="brand-logo-spine"></div></div>
+            Spine Exchange
+        </div>
+        <button class="mobile-auth-btn" onclick="handleAuth()" aria-label="Sign in">
+            <span class="material-icons-round">account_circle</span>
+        </button>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- ░░ SIDEBAR ░░ -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+
         <div class="sidebar-header">
-            <div class="search-box">
-                <span class="material-icons-round">search</span>
-                <input type="text" placeholder="Search notes..." autocomplete="off">
+            <div class="brand-logo">
+                <div class="brand-logo-icon">
+                    <div class="brand-logo-spine"></div>
+                </div>
+                <div>
+                    <div class="brand-name">Spine Exchange</div>
+                    <div class="brand-tagline">Your Senior's Knowledge, Junior's Price.</div>
+                </div>
             </div>
         </div>
+
+        <!-- Sidebar search -->
+        <div class="sidebar-search">
+            <span class="material-icons-round">search</span>
+            <input type="text" placeholder="Search books or notes…" autocomplete="off" aria-label="Search">
+        </div>
+
         <nav class="sidebar-nav">
-            <a href="index.html" class="nav-item active"><span class="material-icons-round">home</span> Home</a>
-            <a href="opensource.html" class="nav-item"><span class="material-icons-round">code</span> Open Source</a>
-            <a href="privacy.html" class="nav-item"><span class="material-icons-round">security</span> Privacy</a>
-            
-            <div class="nav-section-title" style="margin-top: 32px;">Community</div>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfpXtAw1ubSs2J_HRmVfZ4uiRAKo_5OsMf2MBtZVyfH4WJBgA/viewform?usp=header" target="_blank" class="nav-item" style="color: var(--md-primary);">
-                <span class="material-icons-round">upload_file</span> Contribute Notes
+            <a href="index.html" class="nav-item active" aria-current="page">
+                <span class="material-icons-round">swap_horiz</span> The Exchange
+            </a>
+            <a href="#resources-section" class="nav-item" onclick="closeSidebar()">
+                <span class="material-icons-round">library_books</span> MLSU Resources
+            </a>
+            <a href="opensource.html" class="nav-item">
+                <span class="material-icons-round">code</span> Open Source
+            </a>
+            <a href="privacy.html" class="nav-item">
+                <span class="material-icons-round">security</span> Privacy
+            </a>
+
+            <div class="nav-section-title" style="margin-top: 24px;">Community</div>
+            <a href="list-book.html" class="nav-item cta-item">
+                <span class="material-icons-round">add_shopping_cart</span> List a Book
+            </a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfpXtAw1ubSs2J_HRmVfZ4uiRAKo_5OsMf2MBtZVyfH4WJBgA/viewform?usp=header"
+               target="_blank" rel="noopener" class="nav-item">
+                <span class="material-icons-round">description</span> Upload Old Papers
             </a>
         </nav>
+
+        <!-- Auth -->
+        <div class="sidebar-auth">
+            <button class="auth-btn ripple" onclick="handleAuth()" aria-label="Sign in to your account">
+                <span class="material-icons-round">account_circle</span>
+                <span>Sign In</span>
+                <div class="auth-dot"></div>
+            </button>
+        </div>
+
     </aside>
 
+    <!-- ░░ MAIN WRAPPER ░░ -->
     <div class="main-wrapper">
-        <section class="hero">
+
+        <!-- ── HERO ── -->
+        <section class="hero" role="banner">
             <div class="hero-content">
-                <div class="hero-chip"><span class="material-icons-round">school</span> Student Initiative</div>
-                <h1>Mohan Lal Sukhadia University</h1>
-                <h2>LLB & BA.LLB Resources</h2>
-                <p>Filter by your class to find exact notes, syllabus, and past papers instantly.</p>
+                <div class="hero-chips">
+                    <div class="hero-chip">
+                        <span class="material-icons-round">school</span> Student Initiative
+                    </div>
+                    <div class="hero-chip accent">
+                        <span class="material-icons-round">location_on</span> Udaipur Local
+                    </div>
+                </div>
+                <h1>Spine <span>Exchange</span></h1>
+                <h2>Legal Textbook Exchange &amp; MLSU Resources</h2>
+                <p>Reduce costs by buying used textbooks from your seniors. Recycle your old books. Access MLSU study materials instantly.</p>
+                <div class="hero-actions">
+                    <a href="#marketplace-section" class="hero-btn primary ripple">
+                        <span class="material-icons-round">local_mall</span> Browse Books
+                    </a>
+                    <a href="list-book.html" class="hero-btn secondary ripple">
+                        <span class="material-icons-round">add_shopping_cart</span> Sell a Book
+                    </a>
+                </div>
             </div>
         </section>
 
+        <!-- ── MAIN ── -->
         <main>
             <div class="content-wrapper">
-                
-                <div class="official-filter-box animate-in">
-                    <h3 style="margin-bottom: 8px; color: var(--md-on-surface); display: flex; align-items: center; gap: 8px;">
-                        <span class="material-icons-round">manage_search</span> Search Database
-                    </h3>
-                    
-                    <label for="courseSelect">1. Select Course</label>
-                    <select id="courseSelect" onchange="updateYears()">
-                        <option value="">--Select Course--</option>
-                        <option value="llb">LLB (3-Year)</option>
-                        <option value="ballb">BA.LLB (5-Year)</option>
-                    </select>
 
-                    <label for="yearSelect">2. Select Year / Semester</label>
-                    <select id="yearSelect" onchange="updateSubjects()" disabled>
-                        <option value="">--Select Year/Semester--</option>
-                    </select>
 
-                    <label for="subjectSelect">3. Select Subject Paper</label>
-                    <select id="subjectSelect" disabled>
-                        <option value="">--Select Subject--</option>
-                    </select>
+                <!-- ════════════════════════════════════════════════
+                     SECTION 1 — MARKETPLACE
+                ════════════════════════════════════════════════ -->
+                <section id="marketplace-section" class="md-card animate-in" aria-labelledby="marketplace-heading">
 
-                    <button class="search-action-btn ripple" onclick="searchDatabase()">
-                        <span class="material-icons-round">search</span> Find Materials
-                    </button>
-                </div>
-
-                <div id="results-container">
-                    <div style="text-align:center; padding: 20px; color: var(--md-on-surface-variant);">
-                        Select your parameters above and click search.
+                    <div class="section-header">
+                        <span class="material-icons-round">local_mall</span>
+                        <h3 id="marketplace-heading">Student Marketplace</h3>
                     </div>
-                </div>
+                    <p class="section-subhead">Verified S2S Used Law Books in Udaipur</p>
 
-                <div class="md-card animate-in" style="margin-top: 24px;">
-                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
-                        <div class="card-icon-wrapper" style="width: 40px; height: 40px; background: #24292e; color: white;"><span class="material-icons-round" style="font-size: 20px;">person</span></div>
-                        <div>
-                            <h3 style="font-size: 1rem; font-weight: 600; margin: 0;">Gaurav Kalal</h3>
-                            <p style="font-size: 0.8rem; color: var(--md-on-surface-variant); margin: 0;">Creator & Maintainer</p>
+                    <!-- Filter Bar -->
+                    <div class="market-filter-bar" role="search" aria-label="Filter books">
+                        <div class="filter-group">
+                            <label for="subjectFilter">Subject</label>
+                            <select id="subjectFilter" aria-label="Filter by subject">
+                                <option value="">All Subjects</option>
+                                <option value="jurisprudence">Jurisprudence</option>
+                                <option value="constitutional">Constitutional Law</option>
+                                <option value="ipc">BNS / IPC</option>
+                                <option value="crpc">BNSS / CrPC</option>
+                                <option value="civil">Civil Procedure</option>
+                                <option value="property">Transfer of Property</option>
+                                <option value="contract">Contract Law</option>
+                                <option value="family">Family Law</option>
+                                <option value="evidence">Evidence</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="editionFilter">Edition Year</label>
+                            <select id="editionFilter" aria-label="Filter by edition year">
+                                <option value="">Any Edition</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="older">2020 &amp; Older</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="priceFilter">Price Range</label>
+                            <select id="priceFilter" aria-label="Filter by price">
+                                <option value="">Any Price</option>
+                                <option value="0-200">Under ₹200</option>
+                                <option value="200-500">₹200 – ₹500</option>
+                                <option value="500-1000">₹500 – ₹1,000</option>
+                                <option value="1000+">Above ₹1,000</option>
+                            </select>
+                        </div>
+                        <button class="search-action-btn ripple" onclick="searchBooks()" aria-label="Search books">
+                            <span class="material-icons-round">search</span> Search Books
+                        </button>
+                    </div>
+
+                    <!-- Book Grid -->
+                    <div id="book-grid">
+                        <div class="book-grid-placeholder" role="status" aria-live="polite">
+                            <span class="material-icons-round">menu_book</span>
+                            <p>
+                                <strong>Book listings coming soon.</strong><br>
+                                Use the filters above to browse, or
+                                <a href="list-book.html" style="color:var(--brand-primary);font-weight:600;">list your own books for sale</a>.
+                            </p>
                         </div>
                     </div>
-                    <a href="https://github.com/gorupa" class="download-btn ripple" style="background: #24292e; color: white; padding: 10px 20px;" target="_blank">
+
+                </section>
+
+
+                <!-- ════════════════════════════════════════════════
+                     SECTION 2 — MLSU RESOURCE DATABASE
+                ════════════════════════════════════════════════ -->
+                <section id="resources-section" aria-labelledby="resources-heading">
+
+                    <div class="official-filter-box animate-in">
+
+                        <div class="section-header">
+                            <span class="material-icons-round">school</span>
+                            <h3 id="resources-heading">MLSU LLB Resources</h3>
+                        </div>
+                        <p class="section-subhead" style="margin-bottom: 4px;">Notes, Past Papers &amp; Syllabus — Filter to find yours</p>
+
+                        <label for="courseSelect">1. Select Course</label>
+                        <select id="courseSelect" onchange="updateYears()" aria-required="true">
+                            <option value="">— Select Course —</option>
+                            <option value="llb">LLB (3-Year)</option>
+                            <option value="ballb">BA.LLB (5-Year)</option>
+                        </select>
+
+                        <label for="yearSelect">2. Select Year / Semester</label>
+                        <select id="yearSelect" onchange="updateSubjects()" disabled aria-required="true">
+                            <option value="">— Select Year/Semester —</option>
+                        </select>
+
+                        <label for="subjectSelect">3. Select Subject Paper</label>
+                        <select id="subjectSelect" disabled aria-required="true">
+                            <option value="">— Select Subject —</option>
+                        </select>
+
+                        <button class="search-action-btn ripple" onclick="searchDatabase()" style="margin-top: 14px; width: 100%;">
+                            <span class="material-icons-round">search</span> Find Materials
+                        </button>
+
+                    </div>
+
+                    <div id="results-container" aria-live="polite" aria-atomic="true">
+                        <div style="text-align:center; padding: 20px; color: var(--brand-text-soft); font-size: .85rem;">
+                            Select your parameters above and click <strong>Find Materials</strong>.
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- ════════════════════════════════════════════════
+                     SECTION 3 — CREATOR BIO CARD
+                ════════════════════════════════════════════════ -->
+                <div class="md-card animate-in">
+                    <div class="bio-card">
+                        <div class="bio-avatar">
+                            <span class="material-icons-round">person</span>
+                        </div>
+                        <div class="bio-info">
+                            <h3>Gaurav Kalal</h3>
+                            <p>Creator &amp; Maintainer · UN Volunteer · Mobile-First Open Source Advocate, Udaipur</p>
+                        </div>
+                    </div>
+                    <a href="https://github.com/gorupa" class="download-btn ripple"
+                       style="background: #24292e; color: white;"
+                       target="_blank" rel="noopener" aria-label="Follow Gaurav Kalal on GitHub">
                         <span class="material-icons-round" style="font-size: 18px;">code</span> Follow on GitHub
                     </a>
                 </div>
 
+
+                <!-- ════════════════════════════════════════════════
+                     SECTION 4 — SUPPORT / TEA CARD
+                ════════════════════════════════════════════════ -->
                 <div class="md-card animate-in tea-card">
-                    <div style="text-align: center;">
-                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #202124; margin-bottom: 8px;">Fuel the Project ☕</h3>
-                        <p style="font-size: 0.9rem; color: #5f6368; margin-bottom: 20px; line-height: 1.5;">
-                            If these notes saved you hours of exam prep, consider buying me a tea! Your support helps maintain the platform and keeps resources free for all MLSU students.
-                        </p>
-                        <a href="upi://pay?pa=gauravkalal@ybl&pn=Gaurav%20Kalal&cu=INR" class="lucrative-btn ripple">
-                            <span style="font-size: 22px;">☕</span> Support with UPI
-                        </a>
-                    </div>
+                    <h3>Fuel Spine Exchange ☕</h3>
+                    <p>
+                        If Spine Exchange saved you ₹1,000s on textbooks, consider buying the creator a tea!
+                        Your support maintains the infrastructure, keeps all resources free, and funds the
+                        escrow middleman service for safe student-to-student transactions within MLSU.
+                    </p>
+                    <a href="upi://pay?pa=gauravkalal@ybl&pn=Gaurav%20Kalal&tn=Spine%20Exchange%20Support&cu=INR"
+                       class="lucrative-btn ripple" aria-label="Support via UPI payment">
+                        <span style="font-size: 20px;">☕</span> Support via UPI
+                    </a>
                 </div>
 
-            </div>
+
+                <!-- ════════════════════════════════════════════════
+                     OPEN SOURCE NOTICE
+                ════════════════════════════════════════════════ -->
+                <div class="oss-banner animate-in" role="complementary" aria-label="Open source information">
+                    <span class="material-icons-round">code</span>
+                    <p>
+                        <strong>Spine Exchange is open source, licensed under GPLv3.</strong>
+                        We invite developers and law students from MLSU to help build the future of
+                        localized legal tech from Udaipur.
+                        <a href="https://github.com/gorupa" target="_blank" rel="noopener"
+                           style="color: var(--brand-primary); font-weight: 600; text-decoration: underline; text-underline-offset: 2px;">
+                            Contribute on GitHub →
+                        </a>
+                    </p>
+                </div>
+
+
+            </div><!-- /content-wrapper -->
         </main>
 
-        <footer>
-      
+        <!-- ── FOOTER ── -->
+        <footer role="contentinfo">
+            <p class="footer-brand">Spine Exchange</p>
+            <p>
+                A student-powered initiative for MLSU Udaipur ·
+                <a href="privacy.html">Privacy Policy</a> ·
+                <a href="opensource.html">Open Source</a>
+            </p>
+            <p style="margin-top: 6px;">
+                Data sourced from student contributions. Not affiliated with MLSU or any official body.
+            </p>
         </footer>
-    </div>
+
+    </div><!-- /main-wrapper -->
 
     <script src="js/script.js"></script>
+    <script>
+        // ── Sidebar toggle (mobile) ────────────────────────────────
+        function toggleSidebar() {
+            const sidebar  = document.getElementById('sidebar');
+            const overlay  = document.getElementById('sidebarOverlay');
+            const isOpen   = sidebar.classList.toggle('open');
+            overlay.classList.toggle('active', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ── Auth placeholder ───────────────────────────────────────
+        function handleAuth() {
+            // Replace with real auth flow (e.g., Google Sign-In, phone OTP)
+            alert('Authentication coming soon. Sign in will let you manage your listings and saved searches.');
+        }
+
+        // ── Marketplace search placeholder ────────────────────────
+        function searchBooks() {
+            const subject  = document.getElementById('subjectFilter').value;
+            const edition  = document.getElementById('editionFilter').value;
+            const price    = document.getElementById('priceFilter').value;
+            const grid     = document.getElementById('book-grid');
+            // TODO: wire to backend API / Firebase
+            grid.innerHTML = `
+                <div class="book-grid-placeholder" role="status">
+                    <span class="material-icons-round">search</span>
+                    <p>Searching for <strong>${subject || 'all subjects'}</strong>
+                    ${edition ? '· Edition: ' + edition : ''}
+                    ${price   ? '· Price: ₹' + price    : ''}…<br>
+                    <span style="color:var(--brand-text-xsoft);font-size:.8rem;">No listings yet. Be the first to
+                    <a href="list-book.html" style="color:var(--brand-primary);font-weight:600;">list a book</a>!</span></p>
+                </div>`;
+        }
+
+        // ── Smooth scroll for anchor nav links ────────────────────
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ── Animate-in on scroll ───────────────────────────────────
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            document.querySelectorAll('.animate-in').forEach(el => {
+                el.style.animationPlayState = 'paused';
+                observer.observe(el);
+            });
+        }
+    </script>
 </body>
 </html>
