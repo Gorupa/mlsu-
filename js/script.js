@@ -1,5 +1,21 @@
-// --- 1. YOUR MASTER DATABASE ---
-// All your Google Drive folder links are connected here!
+/*
+ * Spine Exchange - js/script.js
+ * Optimized dynamic logic for Marketplace & Resources.
+ * Mobile-first workflow from Udaipur.
+ */
+
+// --- 0. PWA SERVICE WORKER REGISTRATION ---
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./serviceWorker.js')
+            .then(reg => console.log('Spine Exchange SW Registered', reg))
+            .catch(err => console.error('SW Registration Failed', err));
+    });
+}
+
+
+// --- 1. RESOURCE HUB DATABASE ---
+// (Your Google Drive folder links are preserved here)
 const filesDatabase = [
     {
         course: "llb", year: "1", subject: "contract", type: "Study Material Folder", 
@@ -53,7 +69,7 @@ const filesDatabase = [
     }
 ];
 
-// --- 2. DROPDOWN DATA ---
+// --- 2. DROPDOWN CONFIGURATION DATA ---
 const curriculumData = {
     "llb": {
         "1": [
@@ -80,86 +96,148 @@ const curriculumData = {
     }
 };
 
-// --- 3. THE LOGIC ---
+// --- 3. UI GENERATION & FILTER LOGIC ---
+
+// Optimized: Populations of Year/Semester Dropdown
 function updateYears() {
     const course = document.getElementById("courseSelect").value;
     const yearSelect = document.getElementById("yearSelect");
     const subjectSelect = document.getElementById("subjectSelect");
 
+    // Clear downstream dropdowns
     yearSelect.innerHTML = '<option value="">--Select Year/Semester--</option>';
     subjectSelect.innerHTML = '<option value="">--Select Subject--</option>';
     subjectSelect.disabled = true;
 
     if (course) {
         yearSelect.disabled = false;
+        
+        // Configuration: LLB = Years, BA.LLB = Semesters
         const yearsCount = course === "llb" ? 3 : 10;
-        const label = course === "llb" ? "Year" : "Semester";
+        const labelText = course === "llb" ? "Year" : "Semester";
+        
+        // High-Performance: Use DocumentFragment for single DOM insertion
+        const fragment = document.createDocumentFragment();
         
         for (let i = 1; i <= yearsCount; i++) {
-            yearSelect.innerHTML += `<option value="${i}">${label} ${i}</option>`;
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = `${labelText} ${i}`;
+            fragment.appendChild(option);
         }
+        
+        yearSelect.appendChild(fragment);
     } else {
         yearSelect.disabled = true;
     }
 }
 
+// Optimized: Population of Subjects Dropdown
 function updateSubjects() {
     const course = document.getElementById("courseSelect").value;
     const year = document.getElementById("yearSelect").value;
     const subjectSelect = document.getElementById("subjectSelect");
 
+    // Clear subject dropdown
     subjectSelect.innerHTML = '<option value="">--Select Subject--</option>';
 
     if (course && year && curriculumData[course] && curriculumData[course][year]) {
         subjectSelect.disabled = false;
+        
+        const fragment = document.createDocumentFragment();
+        
         curriculumData[course][year].forEach(sub => {
-            subjectSelect.innerHTML += `<option value="${sub.id}">${sub.name}</option>`;
+            const option = document.createElement('option');
+            option.value = sub.id;
+            option.textContent = sub.name;
+            fragment.appendChild(option);
         });
+        
+        subjectSelect.appendChild(fragment);
     } else {
         subjectSelect.disabled = true;
     }
 }
 
+// Optimized & Styled: Search and Render MLSU Resources
 function searchDatabase() {
-    const course = document.getElementById("courseSelect").value;
-    const year = document.getElementById("yearSelect").value;
-    const subject = document.getElementById("subjectSelect").value;
+    const courseSelect = document.getElementById("courseSelect");
+    const yearSelect = document.getElementById("yearSelect");
+    const subjectSelect = document.getElementById("subjectSelect");
     const resultsContainer = document.getElementById("results-container");
 
+    const course = courseSelect.value;
+    const year = yearSelect.value;
+    const subject = subjectSelect.value;
+
+    // Clear previous results immediately
     resultsContainer.innerHTML = "";
 
+    // Error Handling: Not all parameters selected
     if (!course || !year || !subject) {
-        resultsContainer.innerHTML = `<div style="text-align:center; padding: 20px; color: #5f6368;">Please select Course, Year, and Subject to view materials.</div>`;
+        // High-Performance styled placeholder for error
+        const placeholder = document.createElement('div');
+        placeholder.className = 'book-grid-placeholder';
+        placeholder.innerHTML = `
+            <span class="material-icons-round">manage_search</span>
+            <p>Please select <strong>Course, Year, and Subject</strong> to view materials.</p>
+        `;
+        resultsContainer.appendChild(placeholder);
         return;
     }
 
+    // High-Performance Filtering of the database array
     const results = filesDatabase.filter(file => 
         file.course === course && 
         file.year === year && 
         (file.subject === subject || subject === "all")
     );
 
+    // Error Handling: No results found
     if (results.length === 0) {
-        resultsContainer.innerHTML = `<div style="text-align:center; padding: 20px; color: #5f6368;">No materials found for this selection yet. Be the first to contribute!</div>`;
+        const placeholder = document.createElement('div');
+        placeholder.className = 'book-grid-placeholder';
+        placeholder.style.borderColor = 'var(--brand-danger)'; // Red border for 'not found'
+        placeholder.innerHTML = `
+            <span class="material-icons-round" style="color:var(--brand-danger)">sentiment_very_dissatisfied</span>
+            <p style="color:var(--brand-danger)">No materials found for this selection yet.</p>
+            <p>We need your help! Be the first to <a href="#" style="color:var(--brand-primary); font-weight:600; text-decoration:underline;">contribute notes</a> or old papers!</p>
+        `;
+        resultsContainer.appendChild(placeholder);
         return;
     }
 
+    // High-Performance Rendering Loop using DocumentFragment & Styled Cards
+    const fragment = document.createDocumentFragment();
+
     results.forEach(file => {
-        const cardHTML = `
-            <div class="md-card animate-in" style="margin-bottom: 16px;">
-                <div class="card-header">
-                    <div class="card-icon-wrapper"><span class="material-icons-round">${file.icon}</span></div>
-                    <div>
-                        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 4px; color: var(--md-on-surface);">${file.title}</h3>
-                        <p style="font-size: 0.875rem; color: #5f6368;">${file.type}</p>
-                    </div>
+        // High-Impact Styled Card Template (Matches Spine Exchange design identity)
+        const card = document.createElement('div');
+        card.className = 'md-card animate-in';
+        card.style.marginBottom = '16px';
+        
+        card.innerHTML = `
+            <div class="bio-card" style="margin-bottom: 16px;">
+                <div class="bio-avatar" style="background:var(--brand-primary-bg);">
+                    <span class="material-icons-round" style="color:var(--brand-primary)">${file.icon}</span>
                 </div>
-                <p class="card-description">${file.description}</p>
-                <a href="${file.link}" class="download-btn ripple" target="_blank" style="background: var(--md-primary); color: white;">
-                    <span class="material-icons-round">folder_open</span> Open Folder
-                </a>
+                <div class="bio-info">
+                    <h3 style="color:var(--brand-primary)">${file.title}</h3>
+                    <p style="text-transform:uppercase; font-size:0.7rem; color:var(--brand-text-soft)">${file.type}</p>
+                </div>
             </div>
+            <p class="section-subhead" style="margin-left:0; margin-bottom: 20px;">${file.description}</p>
+            <a href="${file.link}" class="lucrative-btn ripple" target="_blank" style="width:100%; animation:none; justify-content:center;">
+                <span class="material-icons-round">folder_open</span> Open Google Drive Folder
+            </a>
         `;
-        resultsContainer.innerHTML += cardHTML;
+        
+        fragment.appendChild(card);
     });
+
+    // Single DOM insertion point for the aggregate results fragment
+    resultsContainer.appendChild(fragment);
+    
+    // Smooth scroll results into view for mobile users
+    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
