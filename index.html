@@ -566,190 +566,89 @@
             font-size: .84rem;
             font-weight: 600;
             cursor: pointer;
-            border: none;
-            transition: opacity var(--transition), transform var(--transition);
-            margin-top: 14px;
+            transition: background var(--transition), transform var(--transition);
         }
-        .download-btn:hover { opacity: .88; }
         .download-btn:active { transform: scale(.97); }
-        .download-btn .material-icons-round { font-size: 17px; }
 
         /* ─── TEA CARD ───────────────────────────────────────────── */
         .tea-card {
-            background: linear-gradient(135deg, #1a237e 0%, #283593 60%, #1a237e 100%);
-            border: none;
+            background: #fff8e1; /* very faint amber */
+            border-color: #ffe082;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
-        .tea-card::before {
-            content: '';
-            position: absolute;
-            top: -30px; right: -30px;
-            width: 120px; height: 120px;
-            border-radius: 50%;
-            background: rgba(245,158,11,.15);
-            pointer-events: none;
-        }
-        .tea-card::after {
-            content: '';
-            position: absolute;
-            bottom: -20px; left: -20px;
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            background: rgba(245,158,11,.1);
-            pointer-events: none;
-        }
-        .tea-card > * { position: relative; z-index: 1; }
-        .tea-card h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
-        .tea-card p { font-size: .87rem; color: rgba(255,255,255,.75); line-height: 1.65; margin-bottom: 20px; }
+        .tea-card h3 { color: #1a1200; margin-bottom: 8px; font-weight: 700; }
+        .tea-card p { font-size: .88rem; color: #5d4037; margin-bottom: 18px; line-height: 1.6; }
+
         .lucrative-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 11px 24px;
+            padding: 12px 24px;
             background: var(--brand-accent);
             color: #1a1200;
             border-radius: var(--radius-xl);
-            font-size: .9rem;
             font-weight: 700;
-            cursor: pointer;
-            border: none;
+            font-size: .95rem;
+            box-shadow: 0 4px 12px rgba(245,158,11,.3);
             transition: box-shadow var(--transition), transform var(--transition);
         }
-        .lucrative-btn:hover { box-shadow: 0 6px 24px rgba(245,158,11,.5); transform: translateY(-1px); }
+        .lucrative-btn:hover { box-shadow: 0 6px 20px rgba(245,158,11,.5); }
         .lucrative-btn:active { transform: scale(.97); }
 
-        /* ─── OPEN SOURCE BANNER ─────────────────────────────────── */
-        .oss-banner {
-            background: #e8eaf6;
-            border: 1px solid #c5cae9;
-            border-radius: var(--radius-md);
-            padding: 16px 20px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-        .oss-banner .material-icons-round { color: var(--brand-primary); font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-        .oss-banner p { font-size: .84rem; color: #283593; line-height: 1.6; }
-        .oss-banner strong { font-weight: 600; }
-
-        /* ─── FOOTER ─────────────────────────────────────────────── */
-        footer {
-            background: var(--brand-surface);
-            border-top: 1px solid var(--brand-border);
-            padding: 20px 24px;
+        /* ─── FOOTER & LICENSE ──────────────────────────────────── */
+        .license-invite {
             text-align: center;
-        }
-        footer p {
             font-size: .78rem;
-            color: var(--brand-text-xsoft);
-            line-height: 1.7;
+            color: var(--brand-text-soft);
+            margin-top: 10px;
+            padding: 0 20px;
+            line-height: 1.5;
         }
-        footer a { color: var(--brand-primary-lt); font-weight: 500; }
-        footer .footer-brand {
-            font-size: .85rem;
-            font-weight: 700;
-            color: var(--brand-primary);
-            margin-bottom: 4px;
-        }
+        .license-invite strong { color: var(--brand-primary); font-weight: 600; }
 
-        /* ─── RIPPLE ─────────────────────────────────────────────── */
-        .ripple { position: relative; overflow: hidden; }
-        .ripple::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(255,255,255,.25) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity .4s;
-        }
-        .ripple:active::after { opacity: 1; transition: none; }
-
-        /* ─── MOBILE ─────────────────────────────────────────────── */
-        .mobile-header {
-            display: none;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 16px;
+        footer {
+            padding: 24px 20px;
+            border-top: 1px solid var(--brand-border);
+            margin-top: auto;
             background: var(--brand-surface);
-            border-bottom: 1px solid var(--brand-border);
-            position: sticky;
-            top: 0;
-            z-index: 200;
+            text-align: center;
+            font-size: .82rem;
+            color: var(--brand-text-xsoft);
         }
-        .mobile-brand {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: .9rem;
-            font-weight: 700;
-            color: var(--brand-primary);
-        }
-        .mobile-brand .brand-logo-icon { width: 28px; height: 28px; }
-        .mobile-menu-btn, .mobile-auth-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 6px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--brand-text);
-            transition: background var(--transition);
-        }
-        .mobile-menu-btn:hover, .mobile-auth-btn:hover { background: var(--brand-bg); }
-        .mobile-menu-btn .material-icons-round,
-        .mobile-auth-btn .material-icons-round { font-size: 22px; }
 
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,.35);
-            z-index: 99;
-            backdrop-filter: blur(2px);
+        /* ─── ANIMATION & RIPPLE ────────────────────────────────── */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+            -webkit-mask-image: -webkit-radial-gradient(white, black); /* safari fix */
         }
-        .sidebar-overlay.active { display: block; }
 
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                box-shadow: 4px 0 24px rgba(0,0,0,.12);
-            }
-            .sidebar.open { transform: translateX(0); }
+        /* ─── RESPONSIVE ────────────────────────────────────────── */
+        @media (max-width: 960px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); box-shadow: 12px 0 32px rgba(0,0,0,.1); }
             .main-wrapper { margin-left: 0; }
-            .mobile-header { display: flex; }
-            .hero { padding: 24px 16px 36px; }
-            .content-wrapper { padding: 16px 12px 36px; }
-            .market-filter-bar { flex-direction: column; }
+            
+            /* Add a mobile header with menu toggle if needed */
+        }
+
+        @media (max-width: 600px) {
+            .hero { padding: 32px 20px 40px; }
+            .hero-actions { flex-direction: column; gap: 8px; }
+            .hero-btn { width: 100%; justify-content: center; }
+            
+            .content-wrapper { padding: 20px 16px 40px; gap: 16px; }
+            .md-card { padding: 16px; }
+            
+            .market-filter-bar { flex-direction: column; align-items: stretch; gap: 12px; }
             .filter-group { min-width: 100%; }
-            .bio-card { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .search-action-btn { width: 100%; justify-content: center; margin-top: 4px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ░░ MOBILE HEADER ░░ -->
-    <header class="mobile-header">
-        <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Open menu">
-            <span class="material-icons-round">menu</span>
-        </button>
-        <div class="mobile-brand">
-            <div class="brand-logo-icon"><div class="brand-logo-spine"></div></div>
-            Spine Exchange
-        </div>
-        <button class="mobile-auth-btn" onclick="handleAuth()" aria-label="Sign in">
-            <span class="material-icons-round">account_circle</span>
-        </button>
-    </header>
-
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
-    <!-- ░░ SIDEBAR ░░ -->
-    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
-
+    <aside class="sidebar">
         <div class="sidebar-header">
             <div class="brand-logo">
                 <div class="brand-logo-icon">
@@ -757,341 +656,185 @@
                 </div>
                 <div>
                     <div class="brand-name">Spine Exchange</div>
-                    <div class="brand-tagline">Your Senior's Knowledge, Junior's Price.</div>
+                    <div class="brand-tagline">Recycle knowledge. Reduce cost.</div>
                 </div>
             </div>
         </div>
-
-        <!-- Sidebar search -->
+        
         <div class="sidebar-search">
             <span class="material-icons-round">search</span>
-            <input type="text" placeholder="Search books or notes…" autocomplete="off" aria-label="Search">
+            <input type="text" placeholder="Search marketplace..." autocomplete="off">
         </div>
 
         <nav class="sidebar-nav">
-            <a href="index.html" class="nav-item active" aria-current="page">
-                <span class="material-icons-round">swap_horiz</span> The Exchange
-            </a>
-            <a href="#resources-section" class="nav-item" onclick="closeSidebar()">
-                <span class="material-icons-round">library_books</span> MLSU Resources
-            </a>
-            <a href="opensource.html" class="nav-item">
-                <span class="material-icons-round">code</span> Open Source
-            </a>
-            <a href="privacy.html" class="nav-item">
-                <span class="material-icons-round">security</span> Privacy
+            <a href="#marketplace-section" class="nav-item active"><span class="material-icons-round">swap_horiz</span> The Exchange</a>
+            <a href="#resources-section" class="nav-item"><span class="material-icons-round">library_books</span> MLSU Resources</a>
+            
+            <div class="nav-section-title">Community</div>
+            <a href="#" class="nav-item cta-item"><span class="material-icons-round">add_shopping_cart</span> List a Book</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfpXtAw1ubSs2J_HRmVfZ4uiRAKo_5OsMf2MBtZVyfH4WJBgA/viewform?usp=header" target="_blank" class="nav-item">
+                <span class="material-icons-round">upload_file</span> Contribute Notes
             </a>
 
-            <div class="nav-section-title" style="margin-top: 24px;">Community</div>
-            <a href="list-book.html" class="nav-item cta-item">
-                <span class="material-icons-round">add_shopping_cart</span> List a Book
-            </a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfpXtAw1ubSs2J_HRmVfZ4uiRAKo_5OsMf2MBtZVyfH4WJBgA/viewform?usp=header"
-               target="_blank" rel="noopener" class="nav-item">
-                <span class="material-icons-round">description</span> Upload Old Papers
-            </a>
+            <div class="nav-section-title">System</div>
+            <a href="opensource.html" class="nav-item"><span class="material-icons-round">code</span> Open Source</a>
+            <a href="privacy.html" class="nav-item"><span class="material-icons-round">security</span> Privacy</a>
         </nav>
 
-        <!-- Auth -->
         <div class="sidebar-auth">
-            <button class="auth-btn ripple" onclick="handleAuth()" aria-label="Sign in to your account">
+            <button class="auth-btn ripple">
                 <span class="material-icons-round">account_circle</span>
-                <span>Sign In</span>
+                Student Account
                 <div class="auth-dot"></div>
             </button>
         </div>
-
     </aside>
 
-    <!-- ░░ MAIN WRAPPER ░░ -->
     <div class="main-wrapper">
-
-        <!-- ── HERO ── -->
-        <section class="hero" role="banner">
+        <section class="hero">
             <div class="hero-content">
                 <div class="hero-chips">
-                    <div class="hero-chip">
-                        <span class="material-icons-round">school</span> Student Initiative
-                    </div>
-                    <div class="hero-chip accent">
-                        <span class="material-icons-round">location_on</span> Udaipur Local
-                    </div>
+                    <div class="hero-chip"><span class="material-icons-round">school</span> Student Initiative</div>
+                    <div class="hero-chip accent"><span class="material-icons-round">fmd_good</span> Udaipur Local</div>
                 </div>
-                <h1>Spine <span>Exchange</span></h1>
-                <h2>Legal Textbook Exchange &amp; MLSU Resources</h2>
-                <p>Reduce costs by buying used textbooks from your seniors. Recycle your old books. Access MLSU study materials instantly.</p>
+                <h1>Spine Exchange</h1>
+                <h2>Legal Textbook Exchange & Resources</h2>
+                <p>Reduce costs by buying used textbooks from seniors. Recycle your old books. Access MLSU study materials instantly.</p>
                 <div class="hero-actions">
-                    <a href="#marketplace-section" class="hero-btn primary ripple">
-                        <span class="material-icons-round">local_mall</span> Browse Books
-                    </a>
-                    <a href="list-book.html" class="hero-btn secondary ripple">
-                        <span class="material-icons-round">add_shopping_cart</span> Sell a Book
-                    </a>
+                    <button class="hero-btn primary ripple" onclick="document.getElementById('marketplace-section').scrollIntoView();">
+                        <span class="material-icons-round">search</span> Browse Books
+                    </button>
+                    <button class="hero-btn secondary ripple" onclick="document.getElementById('resources-section').scrollIntoView();">
+                        <span class="material-icons-round">library_books</span> Find Resources
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- ── MAIN ── -->
         <main>
             <div class="content-wrapper">
-
-
-                <!-- ════════════════════════════════════════════════
-                     SECTION 1 — MARKETPLACE
-                ════════════════════════════════════════════════ -->
-                <section id="marketplace-section" class="md-card animate-in" aria-labelledby="marketplace-heading">
-
+                
+                <div id="marketplace-section" class="md-card animate-in">
                     <div class="section-header">
                         <span class="material-icons-round">local_mall</span>
-                        <h3 id="marketplace-heading">Student Marketplace</h3>
+                        <h3>Student Marketplace</h3>
                     </div>
                     <p class="section-subhead">Verified S2S Used Law Books in Udaipur</p>
-
-                    <!-- Filter Bar -->
-                    <div class="market-filter-bar" role="search" aria-label="Filter books">
+                    
+                    <div class="market-filter-bar">
                         <div class="filter-group">
-                            <label for="subjectFilter">Subject</label>
-                            <select id="subjectFilter" aria-label="Filter by subject">
-                                <option value="">All Subjects</option>
-                                <option value="jurisprudence">Jurisprudence</option>
-                                <option value="constitutional">Constitutional Law</option>
-                                <option value="ipc">BNS / IPC</option>
-                                <option value="crpc">BNSS / CrPC</option>
-                                <option value="civil">Civil Procedure</option>
-                                <option value="property">Transfer of Property</option>
-                                <option value="contract">Contract Law</option>
-                                <option value="family">Family Law</option>
-                                <option value="evidence">Evidence</option>
-                            </select>
+                            <label for="bookSubject">Subject</label>
+                            <input type="text" id="bookSubject" placeholder="e.g., Contract Law">
                         </div>
                         <div class="filter-group">
-                            <label for="editionFilter">Edition Year</label>
-                            <select id="editionFilter" aria-label="Filter by edition year">
-                                <option value="">Any Edition</option>
+                            <label for="bookEdition">Edition Year</label>
+                            <select id="bookEdition">
+                                <option value="">Any</option>
                                 <option value="2024">2024</option>
                                 <option value="2023">2023</option>
                                 <option value="2022">2022</option>
-                                <option value="2021">2021</option>
-                                <option value="older">2020 &amp; Older</option>
                             </select>
                         </div>
                         <div class="filter-group">
-                            <label for="priceFilter">Price Range</label>
-                            <select id="priceFilter" aria-label="Filter by price">
-                                <option value="">Any Price</option>
-                                <option value="0-200">Under ₹200</option>
-                                <option value="200-500">₹200 – ₹500</option>
-                                <option value="500-1000">₹500 – ₹1,000</option>
-                                <option value="1000+">Above ₹1,000</option>
-                            </select>
+                            <label for="bookPrice">Max Price</label>
+                            <input type="number" id="bookPrice" placeholder="₹">
                         </div>
-                        <button class="search-action-btn ripple" onclick="searchBooks()" aria-label="Search books">
+                        <button class="search-action-btn ripple">
                             <span class="material-icons-round">search</span> Search Books
                         </button>
                     </div>
 
-                    <!-- Book Grid -->
-                    <div id="book-grid">
-                        <div class="book-grid-placeholder" role="status" aria-live="polite">
-                            <span class="material-icons-round">menu_book</span>
-                            <p>
-                                <strong>Book listings coming soon.</strong><br>
-                                Use the filters above to browse, or
-                                <a href="list-book.html" style="color:var(--brand-primary);font-weight:600;">list your own books for sale</a>.
-                            </p>
-                        </div>
+                    <div id="book-grid" class="book-grid-placeholder">
+                        <span class="material-icons-round">auto_stories</span>
+                        <p>Books listed for sale by MLSU students will appear here.</p>
+                        <p>Use the filters above or <strong>List a Book</strong> to get started.</p>
                     </div>
+                </div>
 
-                </section>
-
-
-                <!-- ════════════════════════════════════════════════
-                     SECTION 2 — MLSU RESOURCE DATABASE
-                ════════════════════════════════════════════════ -->
-                <section id="resources-section" aria-labelledby="resources-heading">
-
-                    <div class="official-filter-box animate-in">
-
-                        <div class="section-header">
-                            <span class="material-icons-round">school</span>
-                            <h3 id="resources-heading">MLSU LLB Resources</h3>
-                        </div>
-                        <p class="section-subhead" style="margin-bottom: 4px;">Notes, Past Papers &amp; Syllabus — Filter to find yours</p>
-
-                        <label for="courseSelect">1. Select Course</label>
-                        <select id="courseSelect" onchange="updateYears()" aria-required="true">
-                            <option value="">— Select Course —</option>
-                            <option value="llb">LLB (3-Year)</option>
-                            <option value="ballb">BA.LLB (5-Year)</option>
-                        </select>
-
-                        <label for="yearSelect">2. Select Year / Semester</label>
-                        <select id="yearSelect" onchange="updateSubjects()" disabled aria-required="true">
-                            <option value="">— Select Year/Semester —</option>
-                        </select>
-
-                        <label for="subjectSelect">3. Select Subject Paper</label>
-                        <select id="subjectSelect" disabled aria-required="true">
-                            <option value="">— Select Subject —</option>
-                        </select>
-
-                        <button class="search-action-btn ripple" onclick="searchDatabase()" style="margin-top: 14px; width: 100%;">
-                            <span class="material-icons-round">search</span> Find Materials
-                        </button>
-
+                <div id="resources-section" class="official-filter-box animate-in">
+                    <div class="section-header">
+                        <span class="material-icons-round">school</span>
+                        <h3>MLSU LLB Resources</h3>
                     </div>
+                    <p class="section-subhead">Notes, Past Papers, and Syllabus instantly</p>
+                    
+                    <label for="courseSelect">1. Select Course</label>
+                    <select id="courseSelect" onchange="updateYears()">
+                        <option value="">--Select Course--</option>
+                        <option value="llb">LLB (3-Year)</option>
+                        <option value="ballb">BA.LLB (5-Year)</option>
+                    </select>
 
-                    <div id="results-container" aria-live="polite" aria-atomic="true">
-                        <div style="text-align:center; padding: 20px; color: var(--brand-text-soft); font-size: .85rem;">
-                            Select your parameters above and click <strong>Find Materials</strong>.
-                        </div>
+                    <label for="yearSelect">2. Select Year / Semester</label>
+                    <select id="yearSelect" onchange="updateSubjects()" disabled>
+                        <option value="">--Select Year/Semester--</option>
+                    </select>
+
+                    <label for="subjectSelect">3. Select Subject Paper</label>
+                    <select id="subjectSelect" disabled>
+                        <option value="">--Select Subject--</option>
+                    </select>
+
+                    <button class="search-action-btn ripple" onclick="searchDatabase()" style="margin-top: 16px; width: 100%; justify-content: center;">
+                        <span class="material-icons-round">search</span> Find Materials
+                    </button>
+                </div>
+
+                <div id="results-container">
+                    <div class="animate-in">
+                        Select parameters above and click search to view resources.
                     </div>
+                </div>
 
-                </section>
-
-
-                <!-- ════════════════════════════════════════════════
-                     SECTION 3 — CREATOR BIO CARD
-                ════════════════════════════════════════════════ -->
-                <div class="md-card animate-in">
-                    <div class="bio-card">
-                        <div class="bio-avatar">
-                            <span class="material-icons-round">person</span>
-                        </div>
-                        <div class="bio-info">
-                            <h3>Gaurav Kalal</h3>
-                            <p>Creator &amp; Maintainer · UN Volunteer · Mobile-First Open Source Advocate, Udaipur</p>
-                        </div>
+                <div class="md-card animate-in bio-card">
+                    <div class="bio-avatar">
+                        <span class="material-icons-round">person</span>
                     </div>
-                    <a href="https://github.com/gorupa" class="download-btn ripple"
-                       style="background: #24292e; color: white;"
-                       target="_blank" rel="noopener" aria-label="Follow Gaurav Kalal on GitHub">
-                        <span class="material-icons-round" style="font-size: 18px;">code</span> Follow on GitHub
+                    <div class="bio-info">
+                        <h3>Gaurav Kalal</h3>
+                        <p>Founder & Maintainer | Mobile-First Open Source Advocate, Udaipur.</p>
+                    </div>
+                    <a href="https://github.com/gorupa" class="download-btn ripple" style="background: #24292e; color: white;" target="_blank">
+                        <span class="material-icons-round">code</span> GitHub
                     </a>
                 </div>
 
-
-                <!-- ════════════════════════════════════════════════
-                     SECTION 4 — SUPPORT / TEA CARD
-                ════════════════════════════════════════════════ -->
                 <div class="md-card animate-in tea-card">
                     <h3>Fuel Spine Exchange ☕</h3>
                     <p>
-                        If Spine Exchange saved you ₹1,000s on textbooks, consider buying the creator a tea!
-                        Your support maintains the infrastructure, keeps all resources free, and funds the
-                        escrow middleman service for safe student-to-student transactions within MLSU.
+                        If Spine Exchange saved you ₹1000s on textbooks, consider buying the creator a tea! Your support maintains the platform, keeps resources free, and funds the escrow service for safe transactions among MLSU students.
                     </p>
-                    <a href="upi://pay?pa=gauravkalal@ybl&pn=Gaurav%20Kalal&tn=Spine%20Exchange%20Support&cu=INR"
-                       class="lucrative-btn ripple" aria-label="Support via UPI payment">
-                        <span style="font-size: 20px;">☕</span> Support via UPI
+                    <a href="upi://pay?pa=gauravkalal@ybl&pn=Gaurav%20Kalal&cu=INR" class="lucrative-btn ripple">
+                        <span style="font-size: 22px;">☕</span> Support with UPI
                     </a>
                 </div>
 
-
-                <!-- ════════════════════════════════════════════════
-                     OPEN SOURCE NOTICE
-                ════════════════════════════════════════════════ -->
-                <div class="oss-banner animate-in" role="complementary" aria-label="Open source information">
-                    <span class="material-icons-round">code</span>
-                    <p>
-                        <strong>Spine Exchange is open source, licensed under GPLv3.</strong>
-                        We invite developers and law students from MLSU to help build the future of
-                        localized legal tech from Udaipur.
-                        <a href="https://github.com/gorupa" target="_blank" rel="noopener"
-                           style="color: var(--brand-primary); font-weight: 600; text-decoration: underline; text-underline-offset: 2px;">
-                            Contribute on GitHub →
-                        </a>
-                    </p>
+                <div class="license-invite animate-in">
+                    Spine Exchange is open source, licensed under <strong>GPLv3</strong>. We invite developers and law students from MLSU to help build the future of localized legal tech from Udaipur.
                 </div>
 
-
-            </div><!-- /content-wrapper -->
+            </div>
         </main>
 
-        <!-- ── FOOTER ── -->
-        <footer role="contentinfo">
-            <p class="footer-brand">Spine Exchange</p>
-            <p>
-                A student-powered initiative for MLSU Udaipur ·
-                <a href="privacy.html">Privacy Policy</a> ·
-                <a href="opensource.html">Open Source</a>
-            </p>
-            <p style="margin-top: 6px;">
-                Data sourced from student contributions. Not affiliated with MLSU or any official body.
-            </p>
+        <footer>
+            &copy; 2024 Spine Exchange. A Gorupa initiative from Udaipur.
         </footer>
-
-    </div><!-- /main-wrapper -->
+    </div>
 
     <script src="js/script.js"></script>
     <script>
-        // ── Sidebar toggle (mobile) ────────────────────────────────
-        function toggleSidebar() {
-            const sidebar  = document.getElementById('sidebar');
-            const overlay  = document.getElementById('sidebarOverlay');
-            const isOpen   = sidebar.classList.toggle('open');
-            overlay.classList.toggle('active', isOpen);
-            document.body.style.overflow = isOpen ? 'hidden' : '';
-        }
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.remove('open');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // ── Auth placeholder ───────────────────────────────────────
-        function handleAuth() {
-            // Replace with real auth flow (e.g., Google Sign-In, phone OTP)
-            alert('Authentication coming soon. Sign in will let you manage your listings and saved searches.');
-        }
-
-        // ── Marketplace search placeholder ────────────────────────
-        function searchBooks() {
-            const subject  = document.getElementById('subjectFilter').value;
-            const edition  = document.getElementById('editionFilter').value;
-            const price    = document.getElementById('priceFilter').value;
-            const grid     = document.getElementById('book-grid');
-            // TODO: wire to backend API / Firebase
-            grid.innerHTML = `
-                <div class="book-grid-placeholder" role="status">
-                    <span class="material-icons-round">search</span>
-                    <p>Searching for <strong>${subject || 'all subjects'}</strong>
-                    ${edition ? '· Edition: ' + edition : ''}
-                    ${price   ? '· Price: ₹' + price    : ''}…<br>
-                    <span style="color:var(--brand-text-xsoft);font-size:.8rem;">No listings yet. Be the first to
-                    <a href="list-book.html" style="color:var(--brand-primary);font-weight:600;">list a book</a>!</span></p>
-                </div>`;
-        }
-
-        // ── Smooth scroll for anchor nav links ────────────────────
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+        // Simple ripple effect handler
+        document.querySelectorAll('.ripple').forEach(button => {
+            button.addEventListener('click', function (e) {
+                let x = e.clientX - e.target.offsetLeft;
+                let y = e.clientY - e.target.offsetTop;
+                let ripples = document.createElement('span');
+                ripples.style.left = x + 'px';
+                ripples.style.top = y + 'px';
+                this.appendChild(ripples);
+                setTimeout(() => { ripples.remove() }, 600);
             });
         });
-
-        // ── Animate-in on scroll ───────────────────────────────────
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.animationPlayState = 'running';
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.12 });
-
-            document.querySelectorAll('.animate-in').forEach(el => {
-                el.style.animationPlayState = 'paused';
-                observer.observe(el);
-            });
-        }
     </script>
 </body>
 </html>
